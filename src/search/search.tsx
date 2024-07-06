@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unused-state */
 import { Component } from "react";
 import { AxiosError } from "axios";
 import api, { Character, CharactersResponse } from "../api/api";
@@ -32,39 +31,40 @@ class Search extends Component<Props, State> {
   }
 
   componentDidMount() {
-    this.handleRequest();
-  }
-
-  componentDidUpdate(_: Props, prevState: State) {
-    const { page } = this.state;
-
-    if (prevState.page !== page) {
-      this.handleRequest();
-    }
-  }
-
-  handleRequest = () => {
     const { search, page } = this.state;
+    this.handleRequest(search, page);
+  }
+
+  handleRequest = (search: string, page: number) => {
     this.setState({ isLoading: true });
 
     api
       .getCharacters({ name: search, page })
       .then((res) => {
         this.setState({ characters: res.data.results, info: res.data.info });
+        // eslint-disable-next-line no-console
         console.log(res);
       })
       .catch((error) => this.setState({ error }))
       .finally(() => this.setState({ isLoading: false }));
   };
 
-  handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ search: e.target.value });
   };
 
-  handleClick = () => {
+  handleSearchButtonClick = () => {
+    const { search } = this.state;
+
     this.setState({ page: 1 });
-    // FIXME: setState is asyncrhonous
-    this.handleRequest();
+    this.handleRequest(search, 1);
+  };
+
+  handlePageButtonClick = (pageNumber: number) => {
+    const { search } = this.state;
+
+    this.setState({ page: pageNumber });
+    this.handleRequest(search, pageNumber);
   };
 
   render() {
@@ -75,9 +75,9 @@ class Search extends Component<Props, State> {
           <Input
             placeholder="Type something"
             value={search}
-            onChange={this.handleChange}
+            onChange={this.handleSearchChange}
           />
-          <Button onClick={this.handleClick}>Search</Button>
+          <Button onClick={this.handleSearchButtonClick}>Search</Button>
         </div>
         <div>
           {isLoading ? (
@@ -96,7 +96,7 @@ class Search extends Component<Props, State> {
               .map((pageNumber) => (
                 <Button
                   variant={pageNumber === page ? "standard" : "outlined"}
-                  onClick={() => this.setState({ page: pageNumber })}
+                  onClick={() => this.handlePageButtonClick(pageNumber)}
                   key={pageNumber}
                 >
                   {pageNumber}
