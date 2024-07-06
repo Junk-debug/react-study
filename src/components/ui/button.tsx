@@ -5,6 +5,7 @@ interface Props {
   onClick?: () => void;
   className?: string;
   variant?: "standard" | "outlined";
+  disabled?: boolean | undefined;
 }
 
 const getVariantStyles = (variant: "standard" | "outlined" | undefined) => {
@@ -19,9 +20,10 @@ const getVariantStyles = (variant: "standard" | "outlined" | undefined) => {
 
 class Button extends PureComponent<Props> {
   render() {
-    const { children, onClick, className, variant } = this.props;
+    const { children, onClick, className, variant, disabled } = this.props;
     return (
       <button
+        disabled={disabled}
         type="button"
         onClick={onClick}
         className={`${className} ${getVariantStyles(variant)} h-9 px-4 py-2 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none active:scale-95 disabled:pointer-events-none disabled:opacity-50`}

@@ -1,10 +1,10 @@
 import { PureComponent } from "react";
 import { AxiosError } from "axios";
-import { Character } from "../api/api";
+import { ApiError, Character } from "../api/api";
 
 interface Props {
   characters: Character[];
-  error: AxiosError | null;
+  error: AxiosError<ApiError> | null;
 }
 
 class CardsGroup extends PureComponent<Props> {
@@ -12,7 +12,7 @@ class CardsGroup extends PureComponent<Props> {
     const { characters, error } = this.props;
     if (error) {
       // FIXME: fix this type error
-      // throw new Error(error.response?.data?.error);
+      throw new Error(error.response?.data?.error);
     }
 
     return (

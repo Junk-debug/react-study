@@ -2,8 +2,6 @@ import axiosCLient from "axios";
 
 const axios = axiosCLient.create({
   baseURL: "https://rickandmortyapi.com/api",
-  timeout: 5000,
-  timeoutErrorMessage: "The request took too long to complete.",
 });
 
 const enum Status {
@@ -60,6 +58,10 @@ interface CharactersParams {
   species?: Character["species"];
   type?: Character["type"];
   gender?: Character["gender"];
+}
+
+export interface ApiError {
+  error: string;
 }
 
 const api = {
