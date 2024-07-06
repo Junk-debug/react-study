@@ -10,7 +10,7 @@ interface Props {
 const getVariantStyles = (variant: "standard" | "outlined" | undefined) => {
   switch (variant) {
     case "outlined":
-      return "text-zinc-900 border bg-white shadow-sm hover:bg-white/90 hover:text-zinc-900/90";
+      return "text-zinc-900 border bg-white shadow-sm hover:bg-white/40 hover:text-zinc-900/90";
     case "standard":
     default:
       return "bg-zinc-900 text-white hover:bg-zinc-900/90 shadow";
