@@ -2,10 +2,11 @@ import { Component } from "react";
 import { AxiosError } from "axios";
 import api, { ApiError, CharactersResponse } from "../api/api";
 import Input from "../components/ui/input";
-import ErrorBoundary from "../components/errorBoundary";
+import ErrorBoundary, { FallbackProps } from "../components/errorBoundary";
 import CardsGroup from "./cardsGroup";
 import Button from "../components/ui/button";
 import PaginationBar from "./paginationBar";
+import Loader from "../components/ui/loader";
 
 interface Props {}
 
@@ -18,6 +19,17 @@ interface State {
   testError: boolean;
 }
 
+function ErrorFallback({ error, reset }: FallbackProps) {
+  return (
+    <div className="flex flex-col items-center gap-2">
+      <h1 className="text-2xl font-medium">Oops..</h1>
+      <p>{error.message}</p>
+      <Button onClick={reset}>Try again</Button>
+    </div>
+  );
+}
+
+// TODO: refactor this component to separate logic and displaying
 class Search extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
@@ -43,8 +55,6 @@ class Search extends Component<Props, State> {
       .getCharacters({ name: search, page })
       .then((res) => {
         this.setState({ apiResponse: res.data });
-        // eslint-disable-next-line no-console
-        console.log(res);
       })
       .catch((error) => this.setState({ error }))
       .finally(() => this.setState({ isLoading: false }));
@@ -74,19 +84,13 @@ class Search extends Component<Props, State> {
     const { info, results: characters = [] } = apiResponse || {};
 
     if (testError) {
-      throw new Error("test error");
+      throw new Error(
+        "This is the test error to test error boundary functionality",
+      );
     }
 
     return (
-      <div className="w-full h-24 px-20 py-5">
-        <Button
-          onClick={() => {
-            this.setState({ testError: true });
-          }}
-        >
-          Throw error
-        </Button>
-
+      <div className="max-w-5xl mx-auto py-8 px-4 flex flex-col gap-6">
         <div className="flex gap-2 items-center">
           <Input
             placeholder="Type something"
@@ -97,13 +101,16 @@ class Search extends Component<Props, State> {
         </div>
 
         {isLoading ? (
-          <p>Loading...</p>
+          <div className="w-full flex justify-center">
+            <Loader className="w-11 h-11" />
+          </div>
         ) : (
           <ErrorBoundary
             onReset={() => {
               this.setState({ search: "", error: null });
               this.handleRequest("", 1);
             }}
+            fallback={ErrorFallback}
           >
             <CardsGroup error={error} characters={characters} />
             <PaginationBar
@@ -113,6 +120,15 @@ class Search extends Component<Props, State> {
             />
           </ErrorBoundary>
         )}
+
+        <Button
+          className="self-end bg-red-600 hover:bg-red-600/90"
+          onClick={() => {
+            this.setState({ testError: true });
+          }}
+        >
+          Throw error
+        </Button>
       </div>
     );
   }

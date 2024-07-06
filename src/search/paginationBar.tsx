@@ -9,11 +9,12 @@ interface Props {
 }
 
 class PaginationBar extends PureComponent<Props> {
+  // TODO: add logic for displaying page buttons
   render() {
     const { currentPage, pagesCount, handlePageButtonClick } = this.props;
     const pages = getPagesArray(pagesCount);
     return (
-      <div className="flex gap-1 flex-wrap">
+      <nav className="flex gap-1 flex-wrap">
         <Button
           variant="outlined"
           disabled={currentPage === 1}
@@ -48,7 +49,7 @@ class PaginationBar extends PureComponent<Props> {
         >
           Next
         </Button>
-      </div>
+      </nav>
     );
   }
 }
