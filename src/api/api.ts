@@ -48,7 +48,7 @@ interface Info {
   prev: string | null;
 }
 
-interface CharactersResponse {
+export interface CharactersResponse {
   info: Info;
   results: Character[];
 }
