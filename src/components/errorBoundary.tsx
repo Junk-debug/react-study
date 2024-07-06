@@ -1,11 +1,17 @@
 import { Component, ComponentType } from "react";
 import Button from "./ui/button";
 
+export interface FallbackProps {
+  error: Error;
+  reset: () => void;
+}
+
 interface Props {
   children: React.ReactNode;
   onReset?: () => void;
-  fallback?: ComponentType<{ error: Error; reset: () => void }>;
+  fallback?: ComponentType<FallbackProps>;
 }
+
 type State = {
   error: Error | null;
 };
@@ -38,10 +44,28 @@ class ErrorBoundary extends Component<Props, State> {
       }
 
       return (
-        // TODO: design default fallback
-        <div>
-          <h1>Something went wrong.</h1>
-          <p>Error: {error.message}</p>
+        <div className="flex flex-col items-center h-screen justify-center">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="size-32 text-red-500"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z"
+            />
+          </svg>
+
+          <h1 className="text-center text-4xl font-semibold mb-4">
+            Something went wrong!
+          </h1>
+
+          <p className="text-xl mb-4">{error.message}</p>
+
           <Button onClick={this.reset}>Try again</Button>
         </div>
       );
