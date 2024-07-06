@@ -1,20 +1,21 @@
 import { Component } from "react";
 import { AxiosError } from "axios";
-import api, { Character, CharactersResponse } from "../api/api";
+import api, { ApiError, CharactersResponse } from "../api/api";
 import Input from "../components/ui/input";
 import ErrorBoundary from "../components/errorBoundary";
 import CardsGroup from "./cardsGroup";
 import Button from "../components/ui/button";
+import PaginationBar from "./paginationBar";
 
 interface Props {}
 
 interface State {
   search: string;
   page: number;
-  characters: Character[];
-  error: AxiosError | null;
+  apiResponse: CharactersResponse | null;
+  error: AxiosError<ApiError> | null;
   isLoading: boolean;
-  info: CharactersResponse["info"] | null;
+  testError: boolean;
 }
 
 class Search extends Component<Props, State> {
@@ -23,10 +24,10 @@ class Search extends Component<Props, State> {
     this.state = {
       search: "",
       page: 1,
-      characters: [],
-      info: null,
+      apiResponse: null,
       error: null,
       isLoading: false,
+      testError: false,
     };
   }
 
@@ -41,7 +42,7 @@ class Search extends Component<Props, State> {
     api
       .getCharacters({ name: search, page })
       .then((res) => {
-        this.setState({ characters: res.data.results, info: res.data.info });
+        this.setState({ apiResponse: res.data });
         // eslint-disable-next-line no-console
         console.log(res);
       })
@@ -68,9 +69,24 @@ class Search extends Component<Props, State> {
   };
 
   render() {
-    const { search, page, characters, info, error, isLoading } = this.state;
+    const { search, page, apiResponse, error, isLoading, testError } =
+      this.state;
+    const { info, results: characters = [] } = apiResponse || {};
+
+    if (testError) {
+      throw new Error("test error");
+    }
+
     return (
       <div className="w-full h-24 px-20 py-5">
+        <Button
+          onClick={() => {
+            this.setState({ testError: true });
+          }}
+        >
+          Throw error
+        </Button>
+
         <div className="flex gap-2 items-center">
           <Input
             placeholder="Type something"
@@ -79,31 +95,24 @@ class Search extends Component<Props, State> {
           />
           <Button onClick={this.handleSearchButtonClick}>Search</Button>
         </div>
-        <div>
-          {isLoading ? (
-            <p>Loading...</p>
-          ) : (
-            <ErrorBoundary>
-              <CardsGroup error={error} characters={characters} />
-            </ErrorBoundary>
-          )}
-        </div>
-        <div>
-          <p>Page: {page}</p>
-          <div className="flex gap-1 flex-wrap">
-            {[...Array(info?.pages).keys()]
-              .map((i) => i + 1)
-              .map((pageNumber) => (
-                <Button
-                  variant={pageNumber === page ? "standard" : "outlined"}
-                  onClick={() => this.handlePageButtonClick(pageNumber)}
-                  key={pageNumber}
-                >
-                  {pageNumber}
-                </Button>
-              ))}
-          </div>
-        </div>
+
+        {isLoading ? (
+          <p>Loading...</p>
+        ) : (
+          <ErrorBoundary
+            onReset={() => {
+              this.setState({ search: "", error: null });
+              this.handleRequest("", 1);
+            }}
+          >
+            <CardsGroup error={error} characters={characters} />
+            <PaginationBar
+              pagesCount={info?.pages || 0}
+              currentPage={page}
+              handlePageButtonClick={this.handlePageButtonClick}
+            />
+          </ErrorBoundary>
+        )}
       </div>
     );
   }
