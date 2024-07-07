@@ -55,7 +55,10 @@ function CharacterPage(props: CharactersPageProps) {
 
   return (
     <div className="max-w-5xl mx-auto py-8 px-4 flex flex-col gap-6">
-      <div className="flex gap-2 items-center">
+      <h1 className="text-3xl md:text-5xl font-bold text-center">
+        Rick and Morty characters
+      </h1>
+      <div className="flex flex-col sm:flex-row gap-2 sm:items-center">
         <Input
           placeholder="Type something"
           value={search}
