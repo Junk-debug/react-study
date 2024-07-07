@@ -10,7 +10,6 @@ interface Props {
 }
 
 class PaginationBar extends PureComponent<Props> {
-  // TODO: add logic for displaying page buttons
   render() {
     const { currentPage, pagesCount, handlePageButtonClick } = this.props;
     const pages = getFormattedPagesArray(
