@@ -1,4 +1,4 @@
-import { Component, ComponentType } from "react";
+import { Component, ComponentType, ErrorInfo } from "react";
 import Button from "./ui/button";
 
 export interface FallbackProps {
@@ -24,6 +24,11 @@ class ErrorBoundary extends Component<Props, State> {
 
   static getDerivedStateFromError(error: Error) {
     return { error };
+  }
+
+  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    // eslint-disable-next-line no-console
+    console.error(error, errorInfo);
   }
 
   reset = () => {
