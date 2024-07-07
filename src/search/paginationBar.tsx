@@ -1,6 +1,7 @@
 import { PureComponent } from "react";
 import getPagesArray from "./utils/getPagesArray";
 import Button from "../components/ui/button";
+import getFormattedPagesArray from "./utils/getFormattedPagesArray";
 
 interface Props {
   pagesCount: number;
@@ -12,7 +13,10 @@ class PaginationBar extends PureComponent<Props> {
   // TODO: add logic for displaying page buttons
   render() {
     const { currentPage, pagesCount, handlePageButtonClick } = this.props;
-    const pages = getPagesArray(pagesCount);
+    const pages = getFormattedPagesArray(
+      getPagesArray(pagesCount),
+      currentPage,
+    );
     return (
       <nav className="flex gap-1 flex-wrap">
         <Button
@@ -23,24 +27,24 @@ class PaginationBar extends PureComponent<Props> {
           Prev
         </Button>
 
-        {pages.slice(0, 5).map((pageNumber) => (
-          <Button
-            variant={pageNumber === currentPage ? "standard" : "outlined"}
-            onClick={() => handlePageButtonClick(pageNumber)}
-            key={pageNumber}
-          >
-            {pageNumber}
-          </Button>
-        ))}
-        <Button disabled variant="outlined">
-          ...
-        </Button>
-        <Button
-          variant={pagesCount === currentPage ? "standard" : "outlined"}
-          onClick={() => handlePageButtonClick(pagesCount)}
-        >
-          {pagesCount}
-        </Button>
+        {pages.map((pageNumber) => {
+          if (typeof pageNumber === "symbol") {
+            return (
+              <Button variant="outlined" key={pageNumber.toString()} disabled>
+                ...
+              </Button>
+            );
+          }
+          return (
+            <Button
+              key={pageNumber}
+              variant={pageNumber === currentPage ? "standard" : "outlined"}
+              onClick={() => handlePageButtonClick(pageNumber)}
+            >
+              {pageNumber}
+            </Button>
+          );
+        })}
 
         <Button
           variant="outlined"

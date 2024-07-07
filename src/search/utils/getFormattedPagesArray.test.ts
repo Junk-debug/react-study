@@ -159,3 +159,51 @@ test("current number is 13", () => {
     13,
   ]);
 });
+
+test("pages 7 current number is 1", () => {
+  expect(getFormattedPagesArray([1, 2, 3, 4, 5, 6, 7], 1)).toStrictEqual([
+    1, 2, 3, 4, 5, 6, 7,
+  ]);
+});
+
+test("pages 7 current number is 2", () => {
+  expect(getFormattedPagesArray([1, 2, 3, 4, 5, 6, 7], 2)).toStrictEqual([
+    1, 2, 3, 4, 5, 6, 7,
+  ]);
+});
+
+test("pages 7 current number is 3", () => {
+  expect(getFormattedPagesArray([1, 2, 3, 4, 5, 6, 7], 3)).toStrictEqual([
+    1, 2, 3, 4, 5, 6, 7,
+  ]);
+});
+
+test("pages 7 current number is 4", () => {
+  expect(getFormattedPagesArray([1, 2, 3, 4, 5, 6, 7], 1)).toStrictEqual([
+    1, 2, 3, 4, 5, 6, 7,
+  ]);
+});
+
+test("pages 7 current number is 5", () => {
+  expect(getFormattedPagesArray([1, 2, 3, 4, 5, 6, 7], 5)).toStrictEqual([
+    1, 2, 3, 4, 5, 6, 7,
+  ]);
+});
+
+test("pages 7 current number is 6", () => {
+  expect(getFormattedPagesArray([1, 2, 3, 4, 5, 6, 7], 6)).toStrictEqual([
+    1, 2, 3, 4, 5, 6, 7,
+  ]);
+});
+
+test("pages 7 current number is 7", () => {
+  expect(getFormattedPagesArray([1, 2, 3, 4, 5, 6, 7], 7)).toStrictEqual([
+    1, 2, 3, 4, 5, 6, 7,
+  ]);
+});
+
+test("pages 7 current number is 1", () => {
+  expect(getFormattedPagesArray([1, 2, 3, 4, 5, 6, 7], 1)).toStrictEqual([
+    1, 2, 3, 4, 5, 6, 7,
+  ]);
+});
