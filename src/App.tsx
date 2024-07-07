@@ -1,6 +1,7 @@
 import { PureComponent } from "react";
 import ErrorBoundary from "./components/errorBoundary";
-import Search from "./search/search";
+import WithSearchLogic from "./searchPage/withSearchLogic";
+import SearchPage from "./searchPage/searchPage";
 
 class App extends PureComponent {
   render() {
@@ -10,7 +11,7 @@ class App extends PureComponent {
           Rick and Morty characters
         </h1>
         <ErrorBoundary>
-          <Search />
+          <WithSearchLogic searchPage={SearchPage} />
         </ErrorBoundary>
       </main>
     );
