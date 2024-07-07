@@ -93,11 +93,15 @@ class Search extends Component<Props, State> {
       <div className="max-w-5xl mx-auto py-8 px-4 flex flex-col gap-6">
         <div className="flex gap-2 items-center">
           <Input
+            // TODO: add local storage logic
             placeholder="Type something"
             value={search}
+            disabled={isLoading}
             onChange={this.handleSearchChange}
           />
-          <Button onClick={this.handleSearchButtonClick}>Search</Button>
+          <Button disabled={isLoading} onClick={this.handleSearchButtonClick}>
+            Search
+          </Button>
         </div>
 
         {isLoading ? (

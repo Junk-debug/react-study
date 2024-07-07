@@ -5,13 +5,15 @@ interface Props {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   className?: string;
   placeholder?: string;
+  disabled?: boolean;
 }
 
 class Input extends PureComponent<Props> {
   render() {
-    const { value, onChange, className, placeholder } = this.props;
+    const { value, onChange, className, placeholder, disabled } = this.props;
     return (
       <input
+        disabled={disabled}
         placeholder={placeholder}
         type="text"
         value={value}
