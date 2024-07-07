@@ -45,7 +45,14 @@ class Search extends Component<Props, State> {
 
   componentDidMount() {
     const { search, page } = this.state;
-    this.handleRequest(search, page);
+    const searchFromLS = localStorage.getItem("search");
+
+    if (searchFromLS !== null) {
+      this.setState({ search: searchFromLS });
+      this.handleRequest(searchFromLS, page);
+    } else {
+      this.handleRequest(search, page);
+    }
   }
 
   handleRequest = (search: string, page: number) => {
@@ -67,6 +74,7 @@ class Search extends Component<Props, State> {
   handleSearchButtonClick = () => {
     const { search } = this.state;
 
+    localStorage.setItem("search", search);
     this.setState({ page: 1 });
     this.handleRequest(search, 1);
   };
