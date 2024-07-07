@@ -45,7 +45,7 @@ class WithSearchLogic extends Component<Props, State> {
     this.setState({ isLoading: true });
 
     api
-      .getCharacters({ name: search, page })
+      .getCharacters({ name: search.trim(), page })
       .then((res) => {
         this.setState({ apiResponse: res.data });
       })
