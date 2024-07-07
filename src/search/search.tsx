@@ -126,7 +126,7 @@ class Search extends Component<Props, State> {
         )}
 
         <Button
-          className="self-end bg-red-600 hover:bg-red-600/90"
+          className="!bg-red-600 hover:!bg-red-600/90 self-center md:self-end"
           onClick={() => {
             this.setState({ testError: true });
           }}
