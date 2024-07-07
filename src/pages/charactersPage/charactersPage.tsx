@@ -1,11 +1,11 @@
 import { AxiosError } from "axios";
-import Input from "../components/ui/input";
-import ErrorBoundary, { FallbackProps } from "../components/errorBoundary";
+import Input from "../../components/ui/input";
+import ErrorBoundary, { FallbackProps } from "../../components/errorBoundary";
 import CardsGroup from "./cardsGroup";
-import Button from "../components/ui/button";
+import Button from "../../components/ui/button";
 import PaginationBar from "./paginationBar";
-import Loader from "../components/ui/loader";
-import { CharactersResponse, ApiError } from "../api/api";
+import Loader from "../../components/ui/loader";
+import { CharactersResponse, ApiError } from "../../api/api";
 
 function ErrorFallback({ error, reset }: FallbackProps) {
   return (
@@ -17,7 +17,7 @@ function ErrorFallback({ error, reset }: FallbackProps) {
   );
 }
 
-export interface SearchPageProps {
+export interface CharactersPageProps {
   search: string;
   page: number;
   apiResponse: CharactersResponse | null;
@@ -31,7 +31,7 @@ export interface SearchPageProps {
   handleErrorButtonClick: () => void;
 }
 
-function SearchPage(props: SearchPageProps) {
+function CharacterPage(props: CharactersPageProps) {
   const {
     search,
     page,
@@ -92,4 +92,4 @@ function SearchPage(props: SearchPageProps) {
   );
 }
 
-export default SearchPage;
+export default CharacterPage;

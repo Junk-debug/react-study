@@ -1,6 +1,6 @@
 import { PureComponent } from "react";
 import getPagesArray from "./utils/getPagesArray";
-import Button from "../components/ui/button";
+import Button from "../../components/ui/button";
 import getFormattedPagesArray from "./utils/getFormattedPagesArray";
 
 interface Props {

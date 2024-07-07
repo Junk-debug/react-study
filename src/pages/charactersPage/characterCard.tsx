@@ -1,6 +1,6 @@
 import { PureComponent } from "react";
-import { Character } from "../api/api";
-import ImgWithLoading from "../components/imgWithLoading";
+import { Character } from "../../api/api";
+import ImgWithLoading from "../../components/imgWithLoading";
 
 interface Props {
   character: Character;

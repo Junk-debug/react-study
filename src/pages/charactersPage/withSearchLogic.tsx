@@ -1,10 +1,10 @@
 import { Component, ComponentType } from "react";
 import { AxiosError } from "axios";
-import api, { ApiError, CharactersResponse } from "../api/api";
-import { SearchPageProps } from "./searchPage";
+import api, { ApiError, CharactersResponse } from "../../api/api";
+import { CharactersPageProps } from "./charactersPage";
 
 interface Props {
-  searchPage: ComponentType<SearchPageProps>;
+  charactersPage: ComponentType<CharactersPageProps>;
 }
 
 interface State {
@@ -79,12 +79,12 @@ class WithSearchLogic extends Component<Props, State> {
   };
 
   render() {
-    const { searchPage: SearchPage } = this.props;
+    const { charactersPage: CharactersPage } = this.props;
     const { search, page, apiResponse, error, isLoading, testError } =
       this.state;
 
     return (
-      <SearchPage
+      <CharactersPage
         search={search}
         handleSearchChange={this.handleSearchChange}
         handleSearchButtonClick={this.handleSearchButtonClick}

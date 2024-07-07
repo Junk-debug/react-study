@@ -1,6 +1,6 @@
 import { PureComponent } from "react";
 import { AxiosError } from "axios";
-import { ApiError, Character } from "../api/api";
+import { ApiError, Character } from "../../api/api";
 import CharacterCard from "./characterCard";
 
 interface Props {
