@@ -68,7 +68,7 @@ class ErrorBoundary extends Component<Props, State> {
             Something went wrong!
           </h1>
 
-          <p className="text-xl mb-4">{error.message}</p>
+          <p className="text-center text-xl mb-4">{error.message}</p>
 
           <Button onClick={this.reset}>Try again</Button>
         </div>
