@@ -1,40 +1,25 @@
-import { AxiosError } from "axios";
 import Input from "../../components/ui/input";
 import ErrorBoundary, { FallbackProps } from "../../components/errorBoundary";
 import CardsGroup from "./cardsGroup";
 import Button from "../../components/ui/button";
 import PaginationBar from "./paginationBar";
 import Loader from "../../components/ui/loader";
-import { CharactersResponse, ApiError } from "../../api/api";
+import useSearchLogic from "./useSearchLogic";
 
-function ErrorFallback({ error, reset }: FallbackProps) {
-  return (
-    <div className="flex flex-col items-center gap-2">
-      <h1 className="text-2xl font-medium">Oops..</h1>
-      <p>{error.message}</p>
-      <Button onClick={reset}>Try again</Button>
-    </div>
-  );
-}
+const ErrorFallback: React.FC<FallbackProps> = ({ error, reset }) => (
+  <div className="flex flex-col items-center gap-2">
+    <h1 className="text-2xl font-medium">Oops..</h1>
+    <p>{error.message}</p>
+    <Button onClick={reset}>Try again</Button>
+  </div>
+);
 
-export interface CharactersPageProps {
-  search: string;
-  page: number;
-  apiResponse: CharactersResponse | null;
-  error: AxiosError<ApiError> | null;
-  isLoading: boolean;
-  testError: boolean;
-  handleSearchChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handlePageButtonClick: (pageNumber: number) => void;
-  handleSearchButtonClick: () => void;
-  handleErrorReset: () => void;
-  handleErrorButtonClick: () => void;
-}
+interface Props {}
 
-function CharacterPage(props: CharactersPageProps) {
+const CharactersPage: React.FC<Props> = () => {
   const {
     search,
-    page,
+    currentPage,
     apiResponse,
     error,
     isLoading,
@@ -44,7 +29,8 @@ function CharacterPage(props: CharactersPageProps) {
     handleSearchButtonClick,
     handleErrorReset,
     handleErrorButtonClick,
-  } = props;
+  } = useSearchLogic();
+
   const { info, results: characters = [] } = apiResponse || {};
 
   if (testError) {
@@ -79,7 +65,7 @@ function CharacterPage(props: CharactersPageProps) {
           <CardsGroup error={error} characters={characters} />
           <PaginationBar
             pagesCount={info?.pages || 0}
-            currentPage={page}
+            currentPage={currentPage}
             handlePageButtonClick={handlePageButtonClick}
           />
         </ErrorBoundary>
@@ -93,6 +79,6 @@ function CharacterPage(props: CharactersPageProps) {
       </Button>
     </div>
   );
-}
+};
 
-export default CharacterPage;
+export default CharactersPage;
