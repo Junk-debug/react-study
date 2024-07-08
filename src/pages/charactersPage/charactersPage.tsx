@@ -18,13 +18,13 @@ interface Props {}
 
 const CharactersPage: React.FC<Props> = () => {
   const {
-    search,
+    searchInputValue,
     currentPage,
     apiResponse,
     error,
     isLoading,
     testError,
-    handleSearchChange,
+    handleSearchInputChange,
     handlePageButtonClick,
     handleSearchButtonClick,
     handleErrorReset,
@@ -47,9 +47,9 @@ const CharactersPage: React.FC<Props> = () => {
       <div className="flex flex-col sm:flex-row gap-2 sm:items-center">
         <Input
           placeholder="Type something"
-          value={search}
+          value={searchInputValue}
           disabled={isLoading}
-          onChange={handleSearchChange}
+          onChange={handleSearchInputChange}
         />
         <Button disabled={isLoading} onClick={handleSearchButtonClick}>
           Search

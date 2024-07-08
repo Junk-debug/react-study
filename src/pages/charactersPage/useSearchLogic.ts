@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import api, { CharactersResponse, ApiError } from "../../api/api";
 
 export default function useSearchLogic() {
-  const [search, setSearch] = useState<string>("");
+  const [searchInputValue, setSearchInputValue] = useState<string>("");
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [apiResponse, setApiResponse] = useState<CharactersResponse | null>(
     null,
@@ -24,24 +24,24 @@ export default function useSearchLogic() {
       .finally(() => setIsLoading(false));
   };
 
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearch(e.target.value);
+  const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchInputValue(e.target.value);
   };
 
   const handleSearchButtonClick = () => {
-    localStorage.setItem("search", search);
+    localStorage.setItem("search", searchInputValue);
     setCurrentPage(1);
-    handleRequest(search, 1);
+    handleRequest(searchInputValue, 1);
   };
 
   const handlePageButtonClick = (pageNumber: number) => {
     setCurrentPage(pageNumber);
-    handleRequest(search, pageNumber);
+    handleRequest(searchInputValue, pageNumber);
   };
 
   const handleErrorReset = () => {
     localStorage.setItem("search", "");
-    setSearch("");
+    setSearchInputValue("");
     setError(null);
     handleRequest("", 1);
   };
@@ -50,23 +50,23 @@ export default function useSearchLogic() {
     const searchFromLS = localStorage.getItem("search");
 
     if (searchFromLS !== null) {
-      setSearch(searchFromLS);
+      setSearchInputValue(searchFromLS);
       handleRequest(searchFromLS, currentPage);
     } else {
-      handleRequest(search, currentPage);
+      handleRequest(searchInputValue, currentPage);
     }
     // eslint-disable-next-line react-compiler/react-compiler
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return {
-    search,
+    searchInputValue,
     currentPage,
     apiResponse,
     error,
     isLoading,
     testError,
-    handleSearchChange,
+    handleSearchInputChange,
     handleSearchButtonClick,
     handlePageButtonClick,
     handleErrorReset,
