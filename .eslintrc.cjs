@@ -27,5 +27,7 @@ module.exports = {
     "@typescript-eslint/no-explicit-any": "error",
     "react-compiler/react-compiler": "error",
     "react/require-default-props": "off",
+    'react/function-component-definition': 'off',
+    'react/prop-types': 'off',
   },
 };
