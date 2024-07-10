@@ -47,19 +47,21 @@ export default function useSearchLogic() {
 
   useEffect(() => {
     handleRequest(searchInputValue, currentPage);
+    // eslint-disable-next-line react-compiler/react-compiler
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return {
     searchInputValue,
-    currentPage,
-    apiResponse,
-    error,
-    isLoading,
-    testError,
     handleSearchInputChange,
     handleSearchButtonClick,
+    currentPage,
     handlePageButtonClick,
+    apiResponse,
+    isLoading,
+    error,
     handleErrorReset,
+    testError,
     handleErrorButtonClick: () => setTestError(true),
   };
 }
