@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Input from "../../components/ui/input";
 import ErrorBoundary, { FallbackProps } from "../../components/errorBoundary";
 import CardsGroup from "./cardsGroup";
@@ -5,6 +6,7 @@ import Button from "../../components/ui/button";
 import PaginationBar from "./paginationBar";
 import Loader from "../../components/ui/loader";
 import useSearchLogic from "./useSearchLogic";
+import useTestError from "../../hooks/useTestError";
 
 const ErrorFallback: React.FC<FallbackProps> = ({ error, reset }) => (
   <div className="flex flex-col items-center gap-2">
@@ -23,21 +25,15 @@ const CharactersPage: React.FC<Props> = () => {
     apiResponse,
     error,
     isLoading,
-    testError,
     handleSearchInputChange,
     handlePageButtonClick,
     handleSearchButtonClick,
     handleErrorReset,
-    handleErrorButtonClick,
   } = useSearchLogic();
 
-  const { info, results: characters = [] } = apiResponse || {};
+  const { throwTestError } = useTestError();
 
-  if (testError) {
-    throw new Error(
-      "This is the test error to test error boundary functionality",
-    );
-  }
+  const { info, results: characters = [] } = apiResponse || {};
 
   return (
     <div className="max-w-5xl mx-auto py-8 px-4 flex flex-col gap-6">
@@ -73,10 +69,12 @@ const CharactersPage: React.FC<Props> = () => {
 
       <Button
         className="!bg-red-600 hover:!bg-red-600/90 self-center md:self-end"
-        onClick={handleErrorButtonClick}
+        onClick={throwTestError}
       >
         Throw error
       </Button>
+      <Link to="/error">Go not found</Link>
+      <Link to="/about">Go not found</Link>
     </div>
   );
 };
