@@ -1,7 +1,8 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import { Character } from "../../api/api";
 import ImgWithLoading from "../../components/imgWithLoading";
 
-interface Props {
+interface Props extends React.HTMLAttributes<HTMLDivElement> {
   character: Character;
 }
 
@@ -16,8 +17,11 @@ function getStatusColor(status: Character["status"]) {
   }
 }
 
-const CharacterCard: React.FC<Props> = ({ character }) => (
-  <div className="flex flex-col gap-2 min-w-72 max-w-80 rounded-2xl border bg-white shadow p-4 transition-all hover:-translate-y-1 hover:shadow-md">
+const CharacterCard: React.FC<Props> = ({ character, ...props }) => (
+  <div
+    className="flex flex-col gap-2 min-w-72 max-w-80 rounded-2xl border bg-white shadow p-4 transition-all hover:-translate-y-1 hover:shadow-md"
+    {...props}
+  >
     <ImgWithLoading
       src={character.image}
       alt={character.name}

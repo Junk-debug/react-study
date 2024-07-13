@@ -7,24 +7,24 @@ import ErrorBoundary from "./components/errorBoundary";
 import CharactersPage from "./pages/charactersPage/charactersPage";
 import NotFountPage from "./pages/notFountPage";
 import Loader from "./components/ui/loader";
+import CharacterPage from "./pages/characterPage";
 
 const router = createBrowserRouter(
   [
     {
       path: "/",
+      errorElement: <NotFountPage />,
       element: (
         <ErrorBoundary>
           <CharactersPage />
         </ErrorBoundary>
       ),
-    },
-    {
-      path: "*",
-      element: <NotFountPage />,
-    },
-    {
-      path: "about",
-      element: <h1>About</h1>,
+      children: [
+        {
+          path: "/character/:id",
+          element: <CharacterPage />,
+        },
+      ],
     },
   ],
   { basename: "/react-study/" },

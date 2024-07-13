@@ -71,6 +71,10 @@ const api = {
       `character/?page=${page || ""}&name=${name || ""}&status=${status || ""}&species=${species || ""}&type=${type || ""}&gender=${gender || ""}`,
     );
   },
+
+  getCharacterById: (id: Character["id"]) => {
+    return axios.get<Character>(`character/${id}`);
+  },
 };
 
 export default api;
