@@ -1,25 +1,14 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import { Character } from "../../api/api";
 import ImgWithLoading from "../../components/imgWithLoading";
+import getStatusColor from "./utils/getStatusColor";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   character: Character;
 }
 
-function getStatusColor(status: Character["status"]) {
-  switch (status) {
-    case "Alive":
-      return "text-green-500";
-    case "Dead":
-      return "text-red-500";
-    default:
-      return "text-gray-400";
-  }
-}
-
-const CharacterCard: React.FC<Props> = ({ character, ...props }) => (
+const CharacterCard: React.FC<Props> = ({ character, className, ...props }) => (
   <div
-    className="flex flex-col gap-2 min-w-72 max-w-80 rounded-2xl border bg-white shadow p-4 transition-all hover:-translate-y-1 hover:shadow-md"
+    className={`flex flex-col gap-2 min-w-72 max-w-80 rounded-2xl border bg-white shadow p-4 transition-all hover:-translate-y-1 hover:shadow-md ${className}`}
     {...props}
   >
     <ImgWithLoading

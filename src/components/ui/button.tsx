@@ -1,9 +1,5 @@
-interface Props {
-  children?: React.ReactNode;
-  onClick?: () => void;
-  className?: string;
+interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "standard" | "outlined";
-  disabled?: boolean | undefined;
 }
 
 const getVariantStyles = (variant: "standard" | "outlined" | undefined) => {
@@ -18,16 +14,14 @@ const getVariantStyles = (variant: "standard" | "outlined" | undefined) => {
 
 const Button: React.FC<Props> = ({
   children,
-  onClick,
   className,
   variant,
-  disabled,
+  ...props
 }) => (
   <button
-    disabled={disabled}
     type="button"
-    onClick={onClick}
     className={`${className} ${getVariantStyles(variant)} h-9 px-4 py-2 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none active:scale-95 disabled:pointer-events-none disabled:opacity-50`}
+    {...props}
   >
     {children}
   </button>

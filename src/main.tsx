@@ -4,10 +4,10 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
 import Layout from "./components/layout";
 import ErrorBoundary from "./components/errorBoundary";
-import CharactersPage from "./pages/charactersPage/charactersPage";
+import HomePage from "./pages/homePage/homePage";
 import NotFountPage from "./pages/notFountPage";
 import Loader from "./components/ui/loader";
-import CharacterPage from "./pages/characterPage";
+import CharacterPage from "./pages/characterPage/characterPage";
 
 const router = createBrowserRouter(
   [
@@ -16,7 +16,7 @@ const router = createBrowserRouter(
       errorElement: <NotFountPage />,
       element: (
         <ErrorBoundary>
-          <CharactersPage />
+          <HomePage />
         </ErrorBoundary>
       ),
       children: [
