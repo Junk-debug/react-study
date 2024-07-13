@@ -1,8 +1,8 @@
-import { AxiosError } from "axios";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import api, { CharactersResponse, ApiError } from "../../api/api";
+import api, { CharactersResponse } from "../../api/api";
 import useLocalStorage from "../../hooks/useLocalStorage";
+import useApiRequest from "../../hooks/useApiRequest";
 
 export default function useSearchLogic() {
   const [searchInputValue, setSearchInputValue] = useLocalStorage("search", "");
@@ -12,23 +12,18 @@ export default function useSearchLogic() {
     ? Number(searchParams.get("page"))
     : 1;
 
+  const { executeRequest, loading, error, resetError } = useApiRequest(
+    api.getCharacters,
+  );
+
   const [apiResponse, setApiResponse] = useState<CharactersResponse | null>(
     null,
   );
-  const [error, setError] = useState<AxiosError<ApiError> | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleRequest = (name: string, page: number) => {
-    setIsLoading(true);
-    setError(null);
-
-    api
-      .getCharacters({ name: name.trim(), page })
-      .then((res) => {
-        setApiResponse(res.data);
-      })
-      .catch((err) => setError(err))
-      .finally(() => setIsLoading(false));
+    executeRequest({ name: name.trim(), page }).then((res) => {
+      setApiResponse(res.data);
+    });
   };
 
   const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -47,7 +42,7 @@ export default function useSearchLogic() {
 
   const handleErrorReset = () => {
     setSearchInputValue("");
-    setError(null);
+    resetError();
     handleRequest("", 1);
   };
 
@@ -64,7 +59,7 @@ export default function useSearchLogic() {
     currentPage,
     handlePageButtonClick,
     apiResponse,
-    isLoading,
+    loading,
     error,
     handleErrorReset,
   };
