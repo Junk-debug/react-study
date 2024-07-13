@@ -37,7 +37,7 @@ const HomePage: React.FC<Props> = () => {
 
   return (
     <div className="flex">
-      <div className="mx-auto  py-8 px-4 max-w-5xl flex flex-col gap-6">
+      <div className="mx-auto py-8 px-4 max-w-5xl flex flex-col gap-6">
         <Button
           className="!bg-red-600 hover:!bg-red-600/90 self-center md:self-end"
           onClick={throwTestError}

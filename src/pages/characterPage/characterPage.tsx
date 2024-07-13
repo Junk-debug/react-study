@@ -11,8 +11,10 @@ const CharacterPage: React.FC<Props> = () => {
 
   if (loading) {
     return (
-      <div className="w-96 h-screen flex items-center justify-center">
-        <Loader className="w-11 h-11" />
+      <div className="flex w-96 h-screen relative before:w-96">
+        <div className="w-96 h-screen flex items-center fixed justify-center">
+          <Loader />
+        </div>
       </div>
     );
   }
