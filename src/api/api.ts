@@ -4,13 +4,13 @@ const axios = axiosCLient.create({
   baseURL: "https://rickandmortyapi.com/api",
 });
 
-const enum Status {
+export const enum Status {
   ALIVE = "Alive",
   DEAD = "Dead",
   UNKNOWN = "unknown",
 }
 
-enum Gender {
+export const enum Gender {
   MALE = "Male",
   FEMALE = "Female",
   GENDERLESS = "Genderless",
