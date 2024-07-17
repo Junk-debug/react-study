@@ -1,8 +1,5 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-import { Character } from "../../api/api";
+import { Character } from "../../api/types";
 import ImgWithLoading from "../../components/imgWithLoading";
-import useNavigateWithSearchParams from "../../hooks/useNavigateWithSearchParams";
 import getStatusColor from "./utils/getStatusColor";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
@@ -10,11 +7,9 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 const CharacterCard: React.FC<Props> = ({ character, className, ...props }) => {
-  const navigate = useNavigateWithSearchParams();
   return (
     <div
-      onClick={() => navigate(`/character/${character.id}`)}
-      className={`flex flex-col gap-2 min-w-72 max-w-80 rounded-2xl border bg-white shadow p-4 transition-all hover:-translate-y-1 hover:shadow-md ${className}`}
+      className={`flex flex-col gap-2 min-w-72 max-w-80 rounded-2xl border bg-white shadow p-4 transition-all hover:-translate-y-1 hover:shadow-md ${className || ""}`}
       {...props}
     >
       <ImgWithLoading

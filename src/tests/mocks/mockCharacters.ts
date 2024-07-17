@@ -1,9 +1,9 @@
-import { Character, Status, Gender } from "../../api/api";
+import { Character, Status, Gender } from "../../api/types";
 
 const mockCharacters: Character[] = [
   {
     id: 1,
-    name: "Rick Sanchez",
+    name: "Rick test",
     status: Status.ALIVE,
     species: "Human",
     type: "Mad scientist",

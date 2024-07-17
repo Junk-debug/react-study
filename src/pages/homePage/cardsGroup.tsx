@@ -1,6 +1,7 @@
 import { AxiosError } from "axios";
-import { ApiError, Character } from "../../api/api";
 import CharacterCard from "./characterCard";
+import { Character, ApiError } from "../../api/types";
+import useNavigateWithSearchParams from "../../hooks/useNavigateWithSearchParams";
 
 interface Props {
   characters: Character[];
@@ -9,6 +10,7 @@ interface Props {
 }
 
 const CardsGroup: React.FC<Props> = ({ characters, error, className }) => {
+  const navigate = useNavigateWithSearchParams();
   if (error) {
     throw new Error(error.response?.data?.error);
   }
@@ -18,9 +20,15 @@ const CardsGroup: React.FC<Props> = ({ characters, error, className }) => {
   }
 
   return (
-    <div className={`flex flex-wrap gap-4 ${className}`}>
+    <div className={`flex flex-wrap gap-4 ${className || ""}`}>
       {characters.map((item) => (
-        <CharacterCard key={item.id} character={item} />
+        <CharacterCard
+          onClick={() => {
+            navigate(`/character/${item.id}`);
+          }}
+          key={item.id}
+          character={item}
+        />
       ))}
     </div>
   );

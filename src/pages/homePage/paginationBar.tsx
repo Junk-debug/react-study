@@ -4,14 +4,14 @@ import getFormattedPagesArray from "./utils/getFormattedPagesArray";
 
 interface Props {
   pagesCount: number;
-  handlePageButtonClick: (pageNumber: number) => void;
+  onPageButtonClick: (pageNumber: number) => void;
   currentPage: number;
 }
 
 const PaginationBar: React.FC<Props> = ({
   currentPage,
   pagesCount,
-  handlePageButtonClick,
+  onPageButtonClick,
 }) => {
   const pages = getFormattedPagesArray(getPagesArray(pagesCount), currentPage);
   return (
@@ -19,15 +19,15 @@ const PaginationBar: React.FC<Props> = ({
       <Button
         variant="outlined"
         disabled={currentPage === 1}
-        onClick={() => handlePageButtonClick(currentPage - 1)}
+        onClick={() => onPageButtonClick(currentPage - 1)}
       >
         Prev
       </Button>
 
       {pages.map((pageNumber) => {
-        if (typeof pageNumber === "symbol") {
+        if (typeof pageNumber === "string") {
           return (
-            <Button variant="outlined" key={pageNumber.toString()} disabled>
+            <Button variant="outlined" key={pageNumber} disabled>
               ...
             </Button>
           );
@@ -36,7 +36,7 @@ const PaginationBar: React.FC<Props> = ({
           <Button
             key={pageNumber}
             variant={pageNumber === currentPage ? "standard" : "outlined"}
-            onClick={() => handlePageButtonClick(pageNumber)}
+            onClick={() => onPageButtonClick(pageNumber)}
           >
             {pageNumber}
           </Button>
@@ -46,7 +46,7 @@ const PaginationBar: React.FC<Props> = ({
       <Button
         variant="outlined"
         disabled={currentPage === pagesCount}
-        onClick={() => handlePageButtonClick(currentPage + 1)}
+        onClick={() => onPageButtonClick(currentPage + 1)}
       >
         Next
       </Button>

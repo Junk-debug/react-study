@@ -1,5 +1,4 @@
 import { Outlet } from "react-router-dom";
-import Input from "../../components/ui/input";
 import ErrorBoundary, { FallbackProps } from "../../components/errorBoundary";
 import CardsGroup from "./cardsGroup";
 import Button from "../../components/ui/button";
@@ -7,6 +6,7 @@ import PaginationBar from "./paginationBar";
 import useSearchLogic from "./useSearchLogic";
 import useTestError from "../../hooks/useTestError";
 import Skeleton from "../../components/ui/skeleton";
+import SearchBar from "./searchBar";
 
 const ErrorFallback: React.FC<FallbackProps> = ({ error, reset }) => (
   <div className="flex flex-col items-center gap-2">
@@ -44,20 +44,16 @@ const HomePage: React.FC<Props> = () => {
         >
           Throw error
         </Button>
+
         <h1 className="text-3xl md:text-5xl font-bold text-center">
           Rick and Morty characters
         </h1>
-        <div className="flex flex-col sm:flex-row gap-2 sm:items-center">
-          <Input
-            placeholder="Type something"
-            value={searchInputValue}
-            disabled={loading}
-            onChange={handleSearchInputChange}
-          />
-          <Button disabled={loading} onClick={handleSearchButtonClick}>
-            Search
-          </Button>
-        </div>
+
+        <SearchBar
+          value={searchInputValue}
+          onChange={handleSearchInputChange}
+          onClick={handleSearchButtonClick}
+        />
 
         {loading ? (
           <div className="flex flex-wrap gap-4">
@@ -71,11 +67,12 @@ const HomePage: React.FC<Props> = () => {
             <PaginationBar
               pagesCount={info?.pages || 0}
               currentPage={currentPage}
-              handlePageButtonClick={handlePageButtonClick}
+              onPageButtonClick={handlePageButtonClick}
             />
           </ErrorBoundary>
         )}
       </div>
+
       <Outlet />
     </div>
   );

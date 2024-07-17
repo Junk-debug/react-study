@@ -6,7 +6,7 @@ import useCharacterPage from "./useCharacterPage";
 
 interface Props {}
 
-const CharacterPage: React.FC<Props> = () => {
+const DetailedCharacter: React.FC<Props> = () => {
   const { character, episode, loading, error, navigate } = useCharacterPage();
 
   if (loading) {
@@ -29,7 +29,7 @@ const CharacterPage: React.FC<Props> = () => {
         <div className="fixed w-96 flex h-screen p-4 flex-col rounded-md border bg-white shadow gap-2 overflow-auto">
           <div className="flex items-center justify-between">
             <span className="text-xl font-semibold">{character.name}</span>
-            <CloseButton onClick={() => navigate("/")} />
+            <CloseButton aria-label="close" onClick={() => navigate("/")} />
           </div>
           <ImgWithLoading
             src={character.image}
@@ -82,4 +82,4 @@ const CharacterPage: React.FC<Props> = () => {
   );
 };
 
-export default CharacterPage;
+export default DetailedCharacter;

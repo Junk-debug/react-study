@@ -2,13 +2,13 @@ export default function getFormattedPagesArray(
   pages: number[],
   currentPage: number,
   limit: number = 7,
-): (number | symbol)[] {
+) {
   const totalPages = pages.length;
 
-  const result: (number | symbol)[] = [];
+  const result: (number | string)[] = [];
 
-  const ellipsisStart = Symbol("ellipsisStart");
-  const ellipsisEnd = Symbol("ellipsisEnd");
+  const ellipsisStart = "ellipsisStart";
+  const ellipsisEnd = "ellipsisEnd";
 
   const firstPage = 1;
   const lastPage = totalPages;

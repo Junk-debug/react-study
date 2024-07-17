@@ -7,7 +7,7 @@ import ErrorBoundary from "./components/errorBoundary";
 import HomePage from "./pages/homePage/homePage";
 import NotFountPage from "./pages/notFountPage";
 import Loader from "./components/ui/loader";
-import CharacterPage from "./pages/characterPage/characterPage";
+import DetailedCharacter from "./pages/characterPage/detailedCharacter";
 
 const router = createBrowserRouter(
   [
@@ -22,7 +22,7 @@ const router = createBrowserRouter(
       children: [
         {
           path: "/character/:id",
-          element: <CharacterPage />,
+          element: <DetailedCharacter />,
         },
       ],
     },

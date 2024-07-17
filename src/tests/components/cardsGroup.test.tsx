@@ -1,37 +1,28 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { render, screen } from "@testing-library/react";
 import { it, describe, expect } from "vitest";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { MemoryRouter } from "react-router-dom";
 import CardsGroup from "../../pages/homePage/cardsGroup";
-import mockCharacters from "./mockCharacters";
+import mockCharacters from "../mocks/mockCharacters";
 
 describe("CardsGroup", () => {
   it("should render the specified number of cards", () => {
-    const router = createBrowserRouter([
-      {
-        path: "/",
-        element: <CardsGroup error={null} characters={mockCharacters} />,
-      },
-    ]);
-
-    render(<RouterProvider router={router} />);
+    render(
+      <MemoryRouter initialEntries={["/"]}>
+        <CardsGroup error={null} characters={mockCharacters} />
+      </MemoryRouter>,
+    );
 
     const cardElements = screen.getAllByRole("img");
     expect(cardElements.length).toBe(mockCharacters.length);
   });
 
   it("should render the specified text if array is empty", () => {
-    const router = createBrowserRouter([
-      {
-        path: "/",
-        element: <CardsGroup error={null} characters={[]} />,
-      },
-    ]);
+    render(
+      <MemoryRouter initialEntries={["/"]}>
+        <CardsGroup error={null} characters={[]} />
+      </MemoryRouter>,
+    );
 
-    const text = /nothing/i;
-
-    render(<RouterProvider router={router} />);
-
-    expect(screen.getByText(text)).toBeInTheDocument();
+    expect(screen.getByText(/nothing/i)).toBeInTheDocument();
   });
 });

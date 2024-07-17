@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import api, { Character, Episode } from "../../api/api";
+import api from "../../api/api";
+import { Character, Episode } from "../../api/types";
 import useApiRequest from "../../hooks/useApiRequest";
 import useNavigateWithSearchParams from "../../hooks/useNavigateWithSearchParams";
 
