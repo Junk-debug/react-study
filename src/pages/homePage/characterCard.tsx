@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { Character } from "../../api/types";
 import ImgWithLoading from "../../components/imgWithLoading";
 import getStatusColor from "./utils/getStatusColor";
@@ -9,7 +10,13 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 const CharacterCard: React.FC<Props> = ({ character, className, ...props }) => {
   return (
     <div
-      className={`flex flex-col gap-2 min-w-72 max-w-80 rounded-2xl border bg-white shadow p-4 transition-all hover:-translate-y-1 hover:shadow-md ${className || ""}`}
+      className={clsx(
+        className,
+        "rounded-2xl border shadow",
+        "flex flex-col gap-2 p-4 min-w-72 max-w-80 transition-all hover:-translate-y-1 hover:shadow-md",
+        "bg-white",
+        "dark:bg-zinc-950 dark:border-zinc-800",
+      )}
       {...props}
     >
       <ImgWithLoading

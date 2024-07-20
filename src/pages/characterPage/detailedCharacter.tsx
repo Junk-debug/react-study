@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import Loader from "../../components/ui/loader";
 import ImgWithLoading from "../../components/imgWithLoading";
 import getStatusColor from "../homePage/utils/getStatusColor";
@@ -26,16 +27,18 @@ const DetailedCharacter: React.FC<Props> = () => {
   return (
     <div className="flex w-96 items-start h-screen relative before:w-96">
       {character && (
-        <div className="fixed w-96 flex h-screen p-4 flex-col rounded-md border bg-white shadow gap-2 overflow-auto">
+        <div
+          className={clsx(
+            "fixed w-96 flex h-screen p-4 flex-col rounded-md border shadow gap-2 overflow-aut",
+            "bg-white",
+            "dark:bg-zinc-950 dark:border-zinc-800",
+          )}
+        >
           <div className="flex items-center justify-between">
             <span className="text-xl font-semibold">{character.name}</span>
             <CloseButton aria-label="close" onClick={() => navigate("/")} />
           </div>
-          <ImgWithLoading
-            src={character.image}
-            alt={character.name}
-            className="rounded-md"
-          />
+          <ImgWithLoading src={character.image} alt={character.name} />
 
           <span>
             Status:{" "}

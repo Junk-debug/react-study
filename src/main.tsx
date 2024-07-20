@@ -8,17 +8,14 @@ import HomePage from "./pages/homePage/homePage";
 import NotFountPage from "./pages/notFountPage";
 import Loader from "./components/ui/loader";
 import DetailedCharacter from "./pages/characterPage/detailedCharacter";
+import ThemeProvider from "./components/themeProvider";
 
 const router = createBrowserRouter(
   [
     {
       path: "/",
       errorElement: <NotFountPage />,
-      element: (
-        <ErrorBoundary>
-          <HomePage />
-        </ErrorBoundary>
-      ),
+      element: <HomePage />,
       children: [
         {
           path: "/character/:id",
@@ -32,11 +29,15 @@ const router = createBrowserRouter(
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <Layout>
-      <RouterProvider
-        router={router}
-        fallbackElement={<Loader className="w-11 h-11" />}
-      />
-    </Layout>
+    <ThemeProvider>
+      <Layout>
+        <ErrorBoundary>
+          <RouterProvider
+            router={router}
+            fallbackElement={<Loader className="w-11 h-11" />}
+          />
+        </ErrorBoundary>
+      </Layout>
+    </ThemeProvider>
   </React.StrictMode>,
 );

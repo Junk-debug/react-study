@@ -39,7 +39,8 @@ const HomePage: React.FC<Props> = () => {
     <div className="flex">
       <div className="mx-auto py-8 px-4 max-w-5xl flex flex-col gap-6">
         <Button
-          className="!bg-red-600 hover:!bg-red-600/90 self-center md:self-end"
+          variant="destructive"
+          className="self-center md:self-end"
           onClick={throwTestError}
         >
           Throw error
@@ -51,6 +52,7 @@ const HomePage: React.FC<Props> = () => {
 
         <SearchBar
           value={searchInputValue}
+          disabled={loading}
           onChange={handleSearchInputChange}
           onClick={handleSearchButtonClick}
         />

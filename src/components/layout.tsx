@@ -1,5 +1,13 @@
+import { useThemeContext } from "../services/theme/themeContext";
+
 export default function Layout({ children }: { children: React.ReactNode }) {
+  const { currentTheme } = useThemeContext();
   return (
-    <main className="min-h-screen bg-gray-100 text-zinc-800">{children} </main>
+    <main
+      data-theme={currentTheme}
+      className="transition-colors min-h-screen bg-white text-zinc-800 dark:bg-zinc-950 dark:text-zinc-50"
+    >
+      {children}
+    </main>
   );
 }
