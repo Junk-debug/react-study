@@ -29,7 +29,7 @@ const DetailedCharacter: React.FC<Props> = () => {
       {character && (
         <div
           className={clsx(
-            "fixed w-96 flex h-screen p-4 flex-col rounded-md border shadow gap-2 overflow-aut",
+            "fixed w-96 flex h-screen p-4 flex-col rounded-md border shadow gap-2 overflow-auto transition-colors",
             "bg-white",
             "dark:bg-zinc-950 dark:border-zinc-800",
           )}

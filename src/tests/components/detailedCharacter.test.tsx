@@ -3,7 +3,7 @@ import { MemoryRouter, Routes, Route, Outlet } from "react-router-dom";
 import { it, expect, describe, vi, beforeEach } from "vitest";
 import userEvent from "@testing-library/user-event";
 import { AxiosResponse, AxiosHeaders } from "axios";
-import DetailedCharacter from "../../pages/characterPage/detailedCharacter";
+import DetailedCharacter from "../../pages/detailedCharacter/detailedCharacter";
 import CardsGroup from "../../pages/homePage/cardsGroup";
 import mockCharacters from "../mocks/mockCharacters";
 import api from "../../api/api";
