@@ -7,6 +7,7 @@ import useSearchLogic from "./useSearchLogic";
 import useTestError from "../../hooks/useTestError";
 import Skeleton from "../../components/ui/skeleton";
 import SearchBar from "./searchBar";
+import ThemeToggler from "../../components/themeToggler";
 
 const ErrorFallback: React.FC<FallbackProps> = ({ error, reset }) => (
   <div className="flex flex-col items-center gap-2">
@@ -38,13 +39,13 @@ const HomePage: React.FC<Props> = () => {
   return (
     <div className="flex">
       <div className="mx-auto py-8 px-4 max-w-5xl flex flex-col gap-6">
-        <Button
-          variant="destructive"
-          className="self-center md:self-end"
-          onClick={throwTestError}
-        >
-          Throw error
-        </Button>
+        <div className="flex flex-row-reverse items-center justify-between">
+          <Button variant="destructive" onClick={throwTestError}>
+            Throw error
+          </Button>
+
+          <ThemeToggler />
+        </div>
 
         <h1 className="text-3xl md:text-5xl font-bold text-center">
           Rick and Morty characters
