@@ -7,8 +7,6 @@ interface Props {
   className?: string;
 }
 
-// TODO: add tests
-
 const ThemeToggler: React.FC<Props> = ({ className }) => {
   const { currentTheme, toggleTheme } = useThemeContext();
   return (
