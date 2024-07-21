@@ -25,7 +25,10 @@ const DetailedCharacter: React.FC<Props> = () => {
   }
 
   return (
-    <div className="flex w-96 items-start h-screen relative before:w-96">
+    <div
+      data-testid="detailed-character"
+      className="flex w-96 items-start h-screen relative before:w-96"
+    >
       {character && (
         <div
           className={clsx(

@@ -79,7 +79,7 @@ describe("DetailedCharacter", () => {
     renderFn();
 
     const user = userEvent.setup();
-    await user.click(screen.getByText(mockCharacters[0].name));
+    await user.click(screen.getByTestId("character-card"));
 
     expect(screen.getByText(mockCharacters[0].gender)).toHaveTextContent(
       mockCharacters[0].gender,
@@ -103,11 +103,14 @@ describe("DetailedCharacter", () => {
 
     renderFn();
 
+    const characterCard = screen.getByTestId("character-card");
+
     const user = userEvent.setup();
-    await user.click(screen.getByText(mockCharacters[0].name));
+    await user.click(characterCard);
 
     const closeButton = screen.getByRole("button");
     await user.click(closeButton);
-    expect(closeButton).not.toBeInTheDocument();
+
+    expect(screen.queryByTestId("detailed-character")).not.toBeInTheDocument();
   });
 });

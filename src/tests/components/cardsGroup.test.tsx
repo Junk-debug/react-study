@@ -12,7 +12,7 @@ describe("CardsGroup", () => {
       </MemoryRouter>,
     );
 
-    const cardElements = screen.getAllByRole("img");
+    const cardElements = screen.getAllByTestId("character-card");
     expect(cardElements.length).toBe(mockCharacters.length);
   });
 

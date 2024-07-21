@@ -63,15 +63,13 @@ describe("CharacterCard", () => {
 
     renderFn();
 
-    const cardElement = screen.getByText(mockCharacters[0].name);
+    const cardElement = screen.getByTestId("character-card");
     expect(cardElement).toBeInTheDocument();
 
     const user = userEvent.setup();
     await user.click(cardElement);
 
-    const closeButton = screen.getByLabelText(/close/i);
-
-    expect(closeButton).toBeInTheDocument();
+    expect(screen.getByTestId("detailed-character")).toBeInTheDocument();
   });
 
   it("should trigger additional api on card details open", async () => {
@@ -84,8 +82,7 @@ describe("CharacterCard", () => {
     renderFn();
 
     const user = userEvent.setup();
-
-    await user.click(screen.getByText(mockCharacters[0].name));
+    await user.click(screen.getByTestId("character-card"));
 
     expect(apiMock.getCharacterById).toHaveBeenCalledTimes(1);
   });

@@ -10,6 +10,7 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 const CharacterCard: React.FC<Props> = ({ character, className, ...props }) => {
   return (
     <div
+      data-testid="character-card"
       className={clsx(
         className,
         "rounded-2xl border shadow",
