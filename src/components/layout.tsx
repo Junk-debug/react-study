@@ -1,4 +1,4 @@
-import { useThemeContext } from "../services/theme/themeContext";
+import { useThemeContext } from "../context/themeContext";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const { currentTheme } = useThemeContext();

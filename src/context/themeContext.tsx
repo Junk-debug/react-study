@@ -18,3 +18,5 @@ export const useThemeContext = () => {
 
   return context;
 };
+
+// TODO: add tests

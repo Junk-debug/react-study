@@ -1,5 +1,7 @@
 import { useMemo, useState } from "react";
-import { ThemeContext } from "../services/theme/themeContext";
+import { ThemeContext } from "../context/themeContext";
+
+// TODO: add tests
 
 const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
