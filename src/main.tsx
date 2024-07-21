@@ -15,7 +15,11 @@ const router = createBrowserRouter(
     {
       path: "/",
       errorElement: <NotFountPage />,
-      element: <HomePage />,
+      element: (
+        <ErrorBoundary>
+          <HomePage />
+        </ErrorBoundary>
+      ),
       children: [
         {
           path: "/character/:id",
@@ -31,12 +35,10 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <ThemeProvider>
       <Layout>
-        <ErrorBoundary>
-          <RouterProvider
-            router={router}
-            fallbackElement={<Loader className="w-11 h-11" />}
-          />
-        </ErrorBoundary>
+        <RouterProvider
+          router={router}
+          fallbackElement={<Loader className="w-11 h-11" />}
+        />
       </Layout>
     </ThemeProvider>
   </React.StrictMode>,
