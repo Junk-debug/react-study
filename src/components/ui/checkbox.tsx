@@ -1,19 +1,13 @@
 import clsx from "clsx";
 
-interface Props {
-  className?: string;
+interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   checked?: boolean;
-  onClick?: () => void;
-  disabled?: boolean;
-  id?: string;
 }
 
 const Checkbox: React.FC<Props> = ({
   className,
   checked = false,
-  onClick,
-  disabled,
-  id,
+  ...props
 }) => {
   return (
     <button
@@ -22,9 +16,6 @@ const Checkbox: React.FC<Props> = ({
       aria-label="Checkbox"
       aria-checked={checked}
       data-state={checked ? "checked" : "unchecked"}
-      onClick={onClick}
-      disabled={disabled}
-      id={id}
       className={clsx(
         className,
         "flex items-center justify-center h-4 w-4 shrink-0 rounded-[4px] shadow border border-zinc-900",
@@ -33,6 +24,7 @@ const Checkbox: React.FC<Props> = ({
         "focus-visible:outline-none focus-visible:ring-1",
         "disabled:cursor-not-allowed disabled:opacity-50",
       )}
+      {...props}
     >
       {checked && (
         <span

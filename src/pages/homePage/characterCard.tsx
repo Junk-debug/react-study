@@ -2,6 +2,7 @@ import clsx from "clsx";
 import { Character } from "../../api/types";
 import ImgWithLoading from "../../components/imgWithLoading";
 import getStatusColor from "./utils/getStatusColor";
+import Checkbox from "../../components/ui/checkbox";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   character: Character;
@@ -13,6 +14,7 @@ const CharacterCard: React.FC<Props> = ({ character, className, ...props }) => {
       data-testid="character-card"
       className={clsx(
         className,
+        "relative",
         "rounded-2xl border shadow",
         "flex flex-col gap-2 p-4 min-w-72 max-w-80 transition-all hover:-translate-y-1 hover:shadow-md",
         "bg-white",
@@ -20,6 +22,16 @@ const CharacterCard: React.FC<Props> = ({ character, className, ...props }) => {
       )}
       {...props}
     >
+      <Checkbox
+        className={clsx(
+          "absolute right-6 top-6 z-10",
+          "bg-white dark:bg-zinc-950",
+        )}
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+      />
+
       <ImgWithLoading
         src={character.image}
         alt={character.name}
