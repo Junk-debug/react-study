@@ -10,7 +10,7 @@ const getVariantStyles = (
   switch (variant) {
     case "outlined":
       return clsx(
-        "border bg-white border-zinc-200 text-zinc-900 shadow-sm hover:bg-white/10 hover:text-zinc-900/90",
+        "border bg-white border-zinc-200 text-zinc-900 shadow-sm hover:bg-zinc-100 hover:text-zinc-900/90",
         "dark:bg-zinc-950 dark:border-zinc-800 dark:text-zinc-50 dark:hover:bg-zinc-800 dark:hover:text-zinc-50/90",
       );
     case "destructive":
