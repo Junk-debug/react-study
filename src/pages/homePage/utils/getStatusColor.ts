@@ -1,4 +1,4 @@
-import { Character } from "../../../api/api";
+import { Character } from "../../../api/types";
 
 export default function getStatusColor(status: Character["status"]) {
   switch (status) {

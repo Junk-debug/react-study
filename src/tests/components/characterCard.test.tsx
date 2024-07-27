@@ -25,7 +25,7 @@ describe("CharacterCard", () => {
             path="/"
             element={
               <>
-                <CardsGroup characters={[mockCharacters[0]]} error={null} />
+                <CardsGroup characters={[mockCharacters[0]]} />
                 <Outlet />
               </>
             }

@@ -1,6 +1,6 @@
 import { AxiosError } from "axios";
 import { useCallback, useState } from "react";
-import { ApiError } from "../api/api";
+import { ApiError } from "../api/types";
 
 type RequestFn<TArgs extends unknown[], TResult> = (
   ...args: TArgs
