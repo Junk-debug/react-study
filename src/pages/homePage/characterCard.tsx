@@ -1,14 +1,37 @@
 import clsx from "clsx";
+import { memo } from "react";
 import { Character } from "../../api/types";
 import ImgWithLoading from "../../components/imgWithLoading";
 import getStatusColor from "./utils/getStatusColor";
 import Checkbox from "../../components/ui/checkbox";
+import {
+  selectCharacter,
+  selectIsSelected,
+  unselectCharacter,
+} from "../../redux/slices/selectedCharactersSlice";
+import { useAppDispatch, useAppSelector } from "../../redux/redux";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   character: Character;
 }
 
 const CharacterCard: React.FC<Props> = ({ character, className, ...props }) => {
+  const dispatch = useAppDispatch();
+
+  const isSelected = useAppSelector((state) =>
+    selectIsSelected(state, character.id),
+  );
+
+  const handleCheckboxClick = (e: React.SyntheticEvent) => {
+    e.stopPropagation();
+
+    if (!isSelected) {
+      dispatch(selectCharacter(character));
+    } else {
+      dispatch(unselectCharacter(character.id));
+    }
+  };
+
   return (
     <div
       data-testid="character-card"
@@ -23,13 +46,12 @@ const CharacterCard: React.FC<Props> = ({ character, className, ...props }) => {
       {...props}
     >
       <Checkbox
+        checked={isSelected}
+        onClick={handleCheckboxClick}
         className={clsx(
           "absolute right-6 top-6 z-10",
           "bg-white dark:bg-zinc-950",
         )}
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
       />
 
       <ImgWithLoading
@@ -55,4 +77,4 @@ const CharacterCard: React.FC<Props> = ({ character, className, ...props }) => {
   );
 };
 
-export default CharacterCard;
+export default memo(CharacterCard);

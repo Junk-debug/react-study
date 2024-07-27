@@ -1,30 +1,21 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
-import api from "../../api/api";
 import useLocalStorage from "../../hooks/useLocalStorage";
-import useApiRequest from "../../hooks/useApiRequest";
-import { CharactersResponse } from "../../api/types";
+import apiSlice from "../../api/newApi";
 
 export default function useSearchLogic() {
   const [searchInputValue, setSearchInputValue] = useLocalStorage("search", "");
+
+  const [trigger, { data, isLoading, error }] =
+    apiSlice.useLazyGetCharactersQuery();
 
   const [searchParams, setSearchParams] = useSearchParams();
   const currentPage = searchParams.get("page")
     ? Number(searchParams.get("page"))
     : 1;
 
-  const { executeRequest, loading, error, resetError } = useApiRequest(
-    api.getCharacters,
-  );
-
-  const [apiResponse, setApiResponse] = useState<CharactersResponse | null>(
-    null,
-  );
-
   const handleRequest = (name: string, page: number) => {
-    executeRequest({ name: name.trim(), page }).then((res) => {
-      setApiResponse(res.data);
-    });
+    trigger({ name: name.trim(), page }, true);
   };
 
   const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -43,7 +34,6 @@ export default function useSearchLogic() {
 
   const handleErrorReset = () => {
     setSearchInputValue("");
-    resetError();
     handleRequest("", 1);
   };
 
@@ -59,8 +49,8 @@ export default function useSearchLogic() {
     handleSearchButtonClick,
     currentPage,
     handlePageButtonClick,
-    apiResponse,
-    loading,
+    apiResponse: data,
+    loading: isLoading,
     error,
     handleErrorReset,
   };

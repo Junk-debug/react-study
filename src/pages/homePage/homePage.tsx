@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet as DetailedCardOutlet } from "react-router-dom";
 import ErrorBoundary, { FallbackProps } from "../../components/errorBoundary";
 import CardsGroup from "./cardsGroup";
 import Button from "../../components/ui/button";
@@ -8,6 +8,7 @@ import useTestError from "../../hooks/useTestError";
 import Skeleton from "../../components/ui/skeleton";
 import SearchBar from "./searchBar";
 import ThemeToggler from "../../components/themeToggler";
+import Flyout from "./flyout";
 
 const ErrorFallback: React.FC<FallbackProps> = ({ error, reset }) => (
   <div className="flex flex-col items-center gap-2">
@@ -74,9 +75,11 @@ const HomePage: React.FC<Props> = () => {
             />
           </ErrorBoundary>
         )}
+
+        <Flyout />
       </div>
 
-      <Outlet />
+      <DetailedCardOutlet />
     </div>
   );
 };
