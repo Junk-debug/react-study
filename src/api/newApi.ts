@@ -1,5 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { Character, CharactersParams, CharactersResponse } from "./types";
+import {
+  Character,
+  CharactersParams,
+  CharactersResponse,
+  Episode,
+} from "./types";
 
 const baseUrl = "https://rickandmortyapi.com/api";
 
@@ -17,6 +22,12 @@ const apiSlice = createApi({
     getCharacterById: builder.query<Character, Character["id"]>({
       query: (id) => {
         return `/character/${id}`;
+      },
+    }),
+
+    getEpisodeById: builder.query<Episode, Episode["id"]>({
+      query: (id) => {
+        return `/episode/${id}`;
       },
     }),
   }),

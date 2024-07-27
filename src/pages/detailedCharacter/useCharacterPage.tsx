@@ -1,33 +1,36 @@
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-import api from "../../api/api";
-import { Character, Episode } from "../../api/types";
-import useApiRequest from "../../hooks/useApiRequest";
 import useNavigateWithSearchParams from "../../hooks/useNavigateWithSearchParams";
+import apiSlice from "../../api/newApi";
 
 export default function useCharacterPage() {
   const { id } = useParams();
-  const [character, setCharacter] = useState<Character | null>(null);
-  const [episode, setEpisode] = useState<Episode | null>(null);
   const navigate = useNavigateWithSearchParams();
 
-  const { executeRequest, loading, error } = useApiRequest(
-    api.getCharacterById,
-  );
+  const {
+    data: character,
+    isLoading: isCharacterLoading,
+    error: characterError,
+  } = apiSlice.useGetCharacterByIdQuery(Number(id));
 
-  useEffect(() => {
-    executeRequest(Number(id)).then((res) => {
-      setCharacter(res.data);
+  const episodeUrl = character?.episode[0];
 
-      fetch(res.data.episode[0]).then((response) => {
-        if (response.ok) {
-          response.json().then((data) => {
-            setEpisode(data);
-          });
-        }
-      });
-    });
-  }, [executeRequest, id]);
+  const parts = episodeUrl?.split("/");
 
-  return { character, episode, loading, error, navigate };
+  const episodeId = parts?.[parts.length - 1];
+
+  const {
+    data: episode,
+    isLoading: isEpisodeLoading,
+    error: episodeError,
+  } = apiSlice.useGetEpisodeByIdQuery(Number(episodeId), {
+    skip: !episodeId,
+  });
+
+  return {
+    character,
+    episode,
+    loading: isCharacterLoading || isEpisodeLoading,
+    error: characterError || episodeError,
+    navigate,
+  };
 }

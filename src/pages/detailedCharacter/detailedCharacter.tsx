@@ -4,6 +4,7 @@ import ImgWithLoading from "../../components/imgWithLoading";
 import getStatusColor from "../homePage/utils/getStatusColor";
 import CloseButton from "../../components/ui/closeButton";
 import useCharacterPage from "./useCharacterPage";
+import { ApiError } from "../../api/types";
 
 interface Props {}
 
@@ -21,7 +22,17 @@ const DetailedCharacter: React.FC<Props> = () => {
   }
 
   if (error) {
-    return <div>{error.response?.data.error}</div>;
+    if ("data" in error) {
+      const data = error.data as ApiError;
+
+      return <div>{data.error}</div>;
+    }
+
+    if ("error" in error) {
+      return <div>{error.error}</div>;
+    }
+
+    return <div>Something went wrong</div>;
   }
 
   return (
