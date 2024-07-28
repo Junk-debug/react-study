@@ -1,5 +1,5 @@
 import { it, expect, describe } from "vitest";
-import { convertToCSV } from "../../pages/homePage/utils/convertToCSV";
+import { convertToCSV } from "../../utils/convertToCSV";
 import mockCharacters from "../mocks/mockCharacters";
 
 const result = `id,name,status,species,type,gender,origin/name,origin/url,location/name,location/url,image,episode/0,episode/1,url,created

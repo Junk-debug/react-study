@@ -20,6 +20,7 @@ import store from "../../app/store";
 import server from "../mocks/server";
 import apiSlice from "../../api/api";
 import { mockGetCharacterById } from "../mocks/handlers";
+import { unselectAllCharacters } from "../../redux/slices/selectedCharactersSlice";
 
 describe("CharacterCard", () => {
   const renderFn = () => {
@@ -50,6 +51,7 @@ describe("CharacterCard", () => {
     server.resetHandlers();
     vi.clearAllMocks();
     store.dispatch(apiSlice.util.resetApiState());
+    store.dispatch(unselectAllCharacters());
   });
 
   afterAll(() => server.close());
@@ -86,5 +88,35 @@ describe("CharacterCard", () => {
     await user.click(screen.getByTestId("character-card"));
 
     expect(mockGetCharacterById).toHaveBeenCalledTimes(1);
+  });
+
+  it("should add selected character on checkbox click", async () => {
+    renderFn();
+
+    const user = userEvent.setup();
+    await user.click(screen.getByRole("checkbox"));
+
+    expect(store.getState().selectedCharacters.selectedCharacters.ids).toEqual([
+      mockCharacters[0].id,
+    ]);
+  });
+
+  it("should remove selected character if it is already selected on checkbox click", async () => {
+    renderFn();
+
+    const checkbox = screen.getByRole("checkbox");
+
+    const user = userEvent.setup();
+    await user.click(checkbox);
+
+    expect(store.getState().selectedCharacters.selectedCharacters.ids).toEqual([
+      mockCharacters[0].id,
+    ]);
+
+    await user.click(checkbox);
+
+    expect(store.getState().selectedCharacters.selectedCharacters.ids).toEqual(
+      [],
+    );
   });
 });

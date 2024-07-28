@@ -1,5 +1,5 @@
 /* eslint-disable no-restricted-syntax */
-import { Character } from "../../../api/types";
+import { Character } from "../api/types";
 
 export function convertToCSV(characters: Character[]) {
   if (characters.length === 0) {

@@ -2,7 +2,7 @@ import clsx from "clsx";
 import { memo } from "react";
 import { Character } from "../../api/types";
 import ImgWithLoading from "../../components/imgWithLoading";
-import getStatusColor from "./utils/getStatusColor";
+import getStatusColor from "../../utils/getStatusColor";
 import Checkbox from "../../components/ui/checkbox";
 import {
   selectCharacter,

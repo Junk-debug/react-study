@@ -6,7 +6,7 @@ import {
   unselectAllCharacters,
 } from "../../redux/slices/selectedCharactersSlice";
 import Button from "../../components/ui/button";
-import { convertToCSV, createDownloadCVSLink } from "./utils/convertToCSV";
+import { convertToCSV, createDownloadCVSLink } from "../../utils/convertToCSV";
 
 const Flyout: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -30,6 +30,7 @@ const Flyout: React.FC = () => {
 
   return (
     <div
+      data-testid="flyout"
       className={clsx(
         "z-40 fixed bottom-10 right-10",
         "rounded-md border shadow",

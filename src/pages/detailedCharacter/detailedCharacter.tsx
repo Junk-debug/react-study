@@ -1,10 +1,10 @@
 import clsx from "clsx";
 import Loader from "../../components/ui/loader";
 import ImgWithLoading from "../../components/imgWithLoading";
-import getStatusColor from "../homePage/utils/getStatusColor";
 import CloseButton from "../../components/ui/closeButton";
 import useCharacterPage from "./useCharacterPage";
 import { ApiError } from "../../api/types";
+import getStatusColor from "../../utils/getStatusColor";
 
 interface Props {}
 

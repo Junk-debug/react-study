@@ -13,9 +13,7 @@ export default function useCharacterPage() {
   } = apiSlice.useGetCharacterByIdQuery(Number(id));
 
   const episodeUrl = character?.episode[0];
-
   const parts = episodeUrl?.split("/");
-
   const episodeId = parts?.[parts.length - 1];
 
   const {

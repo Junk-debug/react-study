@@ -1,6 +1,6 @@
 import { it, expect, describe } from "vitest";
-import getPagesArray from "../../pages/homePage/utils/getPagesArray";
-import getFormattedPagesArray from "../../pages/homePage/utils/getFormattedPagesArray";
+import getPagesArray from "../../utils/getPagesArray";
+import getFormattedPagesArray from "../../utils/getFormattedPagesArray";
 
 const ellipsisStart = "ellipsisStart";
 const ellipsisEnd = "ellipsisEnd";

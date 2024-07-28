@@ -56,10 +56,10 @@ describe("DetailedCharacter", () => {
   it("should display loading indicator while fetching data", async () => {
     renderFn();
 
+    await delay(2000);
+
     const user = userEvent.setup();
     await user.click(screen.getByTestId("character-card"));
-
-    delay(500);
 
     const loader = screen.getByLabelText("loading-indicator");
 
