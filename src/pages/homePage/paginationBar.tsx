@@ -1,6 +1,6 @@
-import getPagesArray from "./utils/getPagesArray";
+import getPagesArray from "../../utils/getPagesArray";
+import getFormattedPagesArray from "../../utils/getFormattedPagesArray";
 import Button from "../../components/ui/button";
-import getFormattedPagesArray from "./utils/getFormattedPagesArray";
 
 interface Props {
   pagesCount: number;

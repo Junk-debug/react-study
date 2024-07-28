@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet as DetailedCardOutlet } from "react-router-dom";
 import ErrorBoundary, { FallbackProps } from "../../components/errorBoundary";
 import CardsGroup from "./cardsGroup";
 import Button from "../../components/ui/button";
@@ -7,6 +7,8 @@ import useSearchLogic from "./useSearchLogic";
 import useTestError from "../../hooks/useTestError";
 import Skeleton from "../../components/ui/skeleton";
 import SearchBar from "./searchBar";
+import ThemeToggler from "../../components/themeToggler";
+import Flyout from "./flyout";
 
 const ErrorFallback: React.FC<FallbackProps> = ({ error, reset }) => (
   <div className="flex flex-col items-center gap-2">
@@ -38,12 +40,13 @@ const HomePage: React.FC<Props> = () => {
   return (
     <div className="flex">
       <div className="mx-auto py-8 px-4 max-w-5xl flex flex-col gap-6">
-        <Button
-          className="!bg-red-600 hover:!bg-red-600/90 self-center md:self-end"
-          onClick={throwTestError}
-        >
-          Throw error
-        </Button>
+        <div className="flex flex-row-reverse items-center justify-between">
+          <Button variant="destructive" onClick={throwTestError}>
+            Throw error
+          </Button>
+
+          <ThemeToggler />
+        </div>
 
         <h1 className="text-3xl md:text-5xl font-bold text-center">
           Rick and Morty characters
@@ -51,6 +54,7 @@ const HomePage: React.FC<Props> = () => {
 
         <SearchBar
           value={searchInputValue}
+          disabled={loading}
           onChange={handleSearchInputChange}
           onClick={handleSearchButtonClick}
         />
@@ -71,9 +75,11 @@ const HomePage: React.FC<Props> = () => {
             />
           </ErrorBoundary>
         )}
+
+        <Flyout />
       </div>
 
-      <Outlet />
+      <DetailedCardOutlet />
     </div>
   );
 };
