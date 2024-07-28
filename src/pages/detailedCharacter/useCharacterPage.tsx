@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import useNavigateWithSearchParams from "../../hooks/useNavigateWithSearchParams";
-import apiSlice from "../../api/newApi";
+import apiSlice from "../../api/api";
 
 export default function useCharacterPage() {
   const { id } = useParams();

@@ -1,45 +1,58 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter, Outlet, Route, Routes } from "react-router-dom";
-import { describe, it, expect, vi, beforeEach } from "vitest";
-import { AxiosResponse, AxiosHeaders } from "axios";
+import { Provider } from "react-redux";
+
+import {
+  describe,
+  it,
+  expect,
+  vi,
+  afterAll,
+  afterEach,
+  beforeAll,
+} from "vitest";
+
 import DetailedCharacter from "../../pages/detailedCharacter/detailedCharacter";
 import mockCharacters from "../mocks/mockCharacters";
 import CardsGroup from "../../pages/homePage/cardsGroup";
-import api from "../../api/api";
-import { Character } from "../../api/types";
-
-vi.mock("../../api/api", () => ({
-  default: {
-    getCharacters: vi.fn(),
-    getCharacterById: vi.fn(),
-  },
-}));
+import store from "../../app/store";
+import server from "../mocks/server";
+import apiSlice from "../../api/api";
+import { mockGetCharacterById } from "../mocks/handlers";
 
 describe("CharacterCard", () => {
   const renderFn = () => {
     return render(
-      <MemoryRouter initialEntries={["/"]}>
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <>
-                <CardsGroup characters={[mockCharacters[0]]} />
-                <Outlet />
-              </>
-            }
-          >
-            <Route path="character/:id" element={<DetailedCharacter />} />
-          </Route>
-        </Routes>
-      </MemoryRouter>,
+      <Provider store={store}>
+        <MemoryRouter initialEntries={["/"]}>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <>
+                  <CardsGroup characters={[mockCharacters[0]]} />
+                  <Outlet />
+                </>
+              }
+            >
+              <Route path="character/:id" element={<DetailedCharacter />} />
+            </Route>
+          </Routes>
+        </MemoryRouter>
+      </Provider>,
     );
   };
 
-  beforeEach(() => {
+  beforeAll(() => server.listen());
+
+  afterEach(() => {
+    server.resetHandlers();
     vi.clearAllMocks();
+    store.dispatch(apiSlice.util.resetApiState());
   });
+
+  afterAll(() => server.close());
 
   it("should render relevant card data", () => {
     renderFn();
@@ -55,12 +68,6 @@ describe("CharacterCard", () => {
   });
 
   it("should open card details on click", async () => {
-    const apiMock = vi.mocked(api);
-
-    apiMock.getCharacterById.mockResolvedValue({
-      data: mockCharacters[0],
-    } as AxiosResponse<Character, AxiosHeaders>);
-
     renderFn();
 
     const cardElement = screen.getByTestId("character-card");
@@ -69,21 +76,15 @@ describe("CharacterCard", () => {
     const user = userEvent.setup();
     await user.click(cardElement);
 
-    expect(screen.getByTestId("detailed-character")).toBeInTheDocument();
+    expect(await screen.findByTestId("detailed-character")).toBeInTheDocument();
   });
 
   it("should trigger additional api on card details open", async () => {
-    const apiMock = vi.mocked(api);
-
-    apiMock.getCharacterById.mockResolvedValue({
-      data: mockCharacters[0],
-    } as AxiosResponse<Character, AxiosHeaders>);
-
     renderFn();
 
     const user = userEvent.setup();
     await user.click(screen.getByTestId("character-card"));
 
-    expect(apiMock.getCharacterById).toHaveBeenCalledTimes(1);
+    expect(mockGetCharacterById).toHaveBeenCalledTimes(1);
   });
 });

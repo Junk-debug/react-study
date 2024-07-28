@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import useLocalStorage from "../../hooks/useLocalStorage";
-import apiSlice from "../../api/newApi";
+import apiSlice from "../../api/api";
 
 export default function useSearchLogic() {
   const [searchInputValue, setSearchInputValue] = useLocalStorage("search", "");

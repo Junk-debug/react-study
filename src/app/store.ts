@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import apiSlice from "../api/newApi";
+import apiSlice from "../api/api";
 import selectedCharactersReducer from "../redux/slices/selectedCharactersSlice";
 
 const store = configureStore({
