@@ -3,7 +3,7 @@ import {
   createSelector,
   createSlice,
 } from "@reduxjs/toolkit";
-import { Character } from "../../api/types";
+import { Character } from "@/api/types";
 
 const charactersAdapter = createEntityAdapter<Character>();
 

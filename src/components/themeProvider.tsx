@@ -1,17 +1,21 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { ThemeContext } from "../context/themeContext";
 
 const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const preferredTheme = window.matchMedia("(prefers-color-scheme: light)")
-    .matches
-    ? "light"
-    : "dark";
+  const [theme, setTheme] = useState<"light" | "dark">("light");
 
-  const [theme, setTheme] = useState<"light" | "dark">(
-    () => (localStorage.getItem("theme") as "light" | "dark") ?? preferredTheme,
-  );
+  useEffect(() => {
+    const preferredTheme = window.matchMedia("(prefers-color-scheme: light)")
+      .matches
+      ? "light"
+      : "dark";
+
+    const storedTheme =
+      (localStorage.getItem("theme") as "light" | "dark") ?? preferredTheme;
+    setTheme(storedTheme);
+  }, []);
 
   const contextValue = useMemo(() => {
     const toggleTheme = () => {

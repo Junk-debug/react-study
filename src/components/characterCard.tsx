@@ -1,15 +1,16 @@
 import clsx from "clsx";
 import { memo } from "react";
-import { Character } from "../../api/types";
-import ImgWithLoading from "../../components/imgWithLoading";
-import getStatusColor from "../../utils/getStatusColor";
-import Checkbox from "../../components/ui/checkbox";
+import { Character } from "@/api/types";
+import ImgWithLoading from "@/components/imgWithLoading";
+import getStatusColor from "@/utils/getStatusColor";
+
 import {
   selectCharacter,
   selectIsSelected,
   unselectCharacter,
-} from "../../redux/slices/selectedCharactersSlice";
-import { useAppDispatch, useAppSelector } from "../../redux/redux";
+} from "@/redux/slices/selectedCharactersSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/redux";
+import Button from "./ui/button";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   character: Character;
@@ -22,7 +23,7 @@ const CharacterCard: React.FC<Props> = ({ character, className, ...props }) => {
     selectIsSelected(state, character.id),
   );
 
-  const handleCheckboxClick = (e: React.SyntheticEvent) => {
+  const handleSelectButtonClick = (e: React.SyntheticEvent) => {
     e.stopPropagation();
 
     if (!isSelected) {
@@ -45,15 +46,6 @@ const CharacterCard: React.FC<Props> = ({ character, className, ...props }) => {
       )}
       {...props}
     >
-      <Checkbox
-        checked={isSelected}
-        onClick={handleCheckboxClick}
-        className={clsx(
-          "absolute right-6 top-6 z-10",
-          "bg-white dark:bg-zinc-950",
-        )}
-      />
-
       <ImgWithLoading
         src={character.image}
         alt={character.name}
@@ -73,6 +65,13 @@ const CharacterCard: React.FC<Props> = ({ character, className, ...props }) => {
       <span>
         Origin: <span className="font-medium">{character.origin.name}</span>
       </span>
+      <Button
+        onClick={handleSelectButtonClick}
+        variant={isSelected ? "standard" : "outlined"}
+        className="mt-auto"
+      >
+        {isSelected ? "Selected" : "Select"}
+      </Button>
     </div>
   );
 };

@@ -1,12 +1,12 @@
 import clsx from "clsx";
-import { useAppDispatch, useAppSelector } from "../../redux/redux";
+import { useAppDispatch, useAppSelector } from "@/redux/redux";
 import {
   selectSelectedCharacters,
   selectSelectedCharactersAmount,
   unselectAllCharacters,
-} from "../../redux/slices/selectedCharactersSlice";
-import Button from "../../components/ui/button";
-import { convertToCSV, createDownloadCVSLink } from "../../utils/convertToCSV";
+} from "@/redux/slices/selectedCharactersSlice";
+import Button from "@/components/ui/button";
+import { convertToCSV, createDownloadCVSLink } from "@/utils/convertToCSV";
 
 const Flyout: React.FC = () => {
   const dispatch = useAppDispatch();

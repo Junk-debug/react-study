@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Image from "next/image";
 import Skeleton from "./ui/skeleton";
 
 interface Props {
@@ -12,8 +13,11 @@ const ImgWithLoading: React.FC<Props> = ({ src, alt, className }) => {
 
   return (
     <div className={`${className} relative`}>
-      {isLoading && <Skeleton className="absolute inset-0" />}
-      <img
+      {isLoading && <Skeleton className="absolute inset-0 rounded-md" />}
+      <Image
+        priority
+        width={500}
+        height={500}
         src={src}
         alt={alt}
         onLoad={() => setIsLoading(false)}

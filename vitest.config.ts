@@ -1,5 +1,4 @@
 import react from "@vitejs/plugin-react";
-// vitest.config.ts
 import { configDefaults, defineConfig } from "vitest/config";
 
 export default defineConfig({

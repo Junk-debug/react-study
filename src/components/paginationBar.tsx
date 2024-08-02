@@ -1,6 +1,6 @@
-import getPagesArray from "../../utils/getPagesArray";
-import getFormattedPagesArray from "../../utils/getFormattedPagesArray";
-import Button from "../../components/ui/button";
+import getPagesArray from "@/utils/getPagesArray";
+import getFormattedPagesArray from "@/utils/getFormattedPagesArray";
+import Button from "@/components/ui/button";
 
 interface Props {
   pagesCount: number;
@@ -13,7 +13,12 @@ const PaginationBar: React.FC<Props> = ({
   pagesCount,
   onPageButtonClick,
 }) => {
+  if (pagesCount < 1) {
+    return null;
+  }
+
   const pages = getFormattedPagesArray(getPagesArray(pagesCount), currentPage);
+
   return (
     <nav className="flex gap-1 flex-wrap">
       <Button

@@ -1,36 +1,43 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import {
+  ApiError,
   Character,
   CharactersParams,
   CharactersResponse,
   Episode,
 } from "./types";
 
-const baseUrl = "https://rickandmortyapi.com/api";
+export const baseUrl = "https://rickandmortyapi.com/api";
 
-const apiSlice = createApi({
-  baseQuery: fetchBaseQuery({ baseUrl }),
-  tagTypes: ["Characters"],
-  endpoints: (builder) => ({
-    getCharacters: builder.query<CharactersResponse, CharactersParams>({
-      query: (params) => {
-        const { page, name, status, species, type, gender } = params;
-        return `/character/?page=${page || ""}&name=${name || ""}&status=${status || ""}&species=${species || ""}&type=${type || ""}&gender=${gender || ""}`;
-      },
-    }),
+export const fetchCharacters = async (params: CharactersParams) => {
+  const { page, name, status, species, type, gender } = params;
+  const res = await fetch(
+    `${baseUrl}/character/?page=${page || ""}&name=${name || ""}&status=${status || ""}&species=${species || ""}&type=${type || ""}&gender=${gender || ""}`,
+  );
+  return res.json() as Promise<CharactersResponse | ApiError>;
+};
 
-    getCharacterById: builder.query<Character, Character["id"]>({
-      query: (id) => {
-        return `/character/${id}`;
-      },
-    }),
+export const fetchCharacterById = async (id: string) => {
+  const res = await fetch(`${baseUrl}/character/${id}`);
+  return res.json() as Promise<Character | ApiError>;
+};
 
-    getEpisodeById: builder.query<Episode, Episode["id"]>({
-      query: (id) => {
-        return `/episode/${id}`;
-      },
-    }),
-  }),
-});
+export const fetchEpisodeById = async (id: string) => {
+  const res = await fetch(`${baseUrl}/episode/${id}`);
+  return res.json() as Promise<Episode>;
+};
 
-export default apiSlice;
+export const fetchCharacterDataWithEpisode = async (characterId: string) => {
+  const character = await fetchCharacterById(characterId);
+
+  if ("error" in character) return { character, firstEpisodeName: "" };
+
+  const firstEpisodeUrl = character.episode[0];
+
+  if (!firstEpisodeUrl) return { character, firstEpisodeName: "" };
+
+  const parts = firstEpisodeUrl?.split("/");
+  const firstEpisodeId = parts?.[parts.length - 1];
+  const episode = await fetchEpisodeById(firstEpisodeId);
+
+  return { character, firstEpisodeName: episode.name };
+};
