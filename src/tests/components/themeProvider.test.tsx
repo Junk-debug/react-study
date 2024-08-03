@@ -1,8 +1,8 @@
 import { render, screen } from "@testing-library/react";
 import { it, expect, describe, vi, beforeEach } from "vitest";
 import userEvent from "@testing-library/user-event";
-import ThemeProvider from "../../components/themeProvider";
-import { useThemeContext } from "../../context/themeContext";
+import ThemeProvider from "@/components/themeProvider";
+import { useThemeContext } from "@/context/themeContext";
 
 describe("ThemeProvider", () => {
   const localStorageSpy = vi.spyOn(Storage.prototype, "setItem");

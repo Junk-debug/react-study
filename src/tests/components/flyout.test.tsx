@@ -2,8 +2,8 @@ import { render, screen } from "@testing-library/react";
 import { Provider } from "react-redux";
 import { it, expect, describe, vi, beforeAll } from "vitest";
 import userEvent from "@testing-library/user-event";
-import Flyout from "../../pages/homePage/flyout";
-import { setupStore } from "../../app/store";
+import Flyout from "@/components/flyout";
+import { setupStore } from "@/redux/store";
 import mockCharacters from "../mocks/mockCharacters";
 
 describe("Flyout", () => {

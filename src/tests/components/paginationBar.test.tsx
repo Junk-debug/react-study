@@ -1,37 +1,36 @@
-import { render, screen, waitFor } from "@testing-library/react";
-import { MemoryRouter, useSearchParams } from "react-router-dom";
+import { render, screen } from "@testing-library/react";
 import { it, expect, describe, vi } from "vitest";
 import userEvent from "@testing-library/user-event";
-import PaginationBar from "../../pages/homePage/paginationBar";
+import PaginationBar from "@/components/paginationBar";
+import { useRouter } from "next/router";
+import createMockRouter, { RouterProvider } from "../mocks/createMockRouter";
 
 const mockOnPageButtonClick = vi.fn();
 
 describe("PaginationBar", () => {
   it("should update url query string when page changes", async () => {
-    const mockSetSearchParams = vi.fn();
+    const mockRouter = createMockRouter({});
 
     const TestComponent = () => {
-      const [searchParams, setSearchParams] = useSearchParams();
+      const router = useRouter();
 
       const handlePageChange = (page: number): void => {
-        searchParams.set("page", String(page));
-        setSearchParams(searchParams);
-        mockSetSearchParams(searchParams);
+        router.push({ query: { page } });
       };
 
       return (
         <PaginationBar
           pagesCount={5}
           onPageButtonClick={handlePageChange}
-          currentPage={Number(searchParams.get("page")) || 1}
+          currentPage={1}
         />
       );
     };
 
     render(
-      <MemoryRouter initialEntries={["/?page=1"]}>
+      <RouterProvider router={mockRouter}>
         <TestComponent />
-      </MemoryRouter>,
+      </RouterProvider>,
     );
 
     const nextButton = screen.getByRole("button", { name: /next/i });
@@ -39,15 +38,7 @@ describe("PaginationBar", () => {
     const user = userEvent.setup();
     await user.click(nextButton);
 
-    await waitFor(() => {
-      expect(mockSetSearchParams).toHaveBeenCalledWith(
-        expect.any(URLSearchParams),
-      );
-
-      const updatedSearchParams = mockSetSearchParams?.mock
-        ?.calls?.[0]?.[0] as URLSearchParams;
-      expect(updatedSearchParams.get("page")).toBe("2");
-    });
+    expect(mockRouter.push).toHaveBeenCalledWith({ query: { page: 2 } });
   });
 
   it("should disable prev button on the first page", () => {

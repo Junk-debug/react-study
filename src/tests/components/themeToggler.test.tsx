@@ -2,8 +2,8 @@ import { render, screen } from "@testing-library/react";
 
 import { it, expect, describe, vi } from "vitest";
 import userEvent from "@testing-library/user-event";
-import ThemeToggler from "../../components/themeToggler";
-import { ThemeContext } from "../../context/themeContext";
+import ThemeToggler from "@/components/themeToggler";
+import { ThemeContext } from "@/context/themeContext";
 
 describe("ThemeToggler", () => {
   const mockToggleTheme = vi.fn();

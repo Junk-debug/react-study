@@ -1,18 +1,16 @@
 import { render, screen } from "@testing-library/react";
 import { it, expect, describe } from "vitest";
-import { MemoryRouter, Route, Routes } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
-import NotFoundPage from "../../pages/notFountPage";
+import NotFoundPage from "@/pages/404";
+import createMockRouter, { RouterProvider } from "../mocks/createMockRouter";
 
 describe("NotFoundPage", () => {
+  const router = createMockRouter({ asPath: "/404" });
   const renderFn = () =>
     render(
-      <MemoryRouter initialEntries={["/some-path"]}>
-        <Routes>
-          <Route path="/" element={<div>Home page</div>} />
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-      </MemoryRouter>,
+      <RouterProvider router={router}>
+        <NotFoundPage />
+      </RouterProvider>,
     );
 
   it("should display the correct text", () => {
@@ -30,13 +28,12 @@ describe("NotFoundPage", () => {
     expect(button).toHaveTextContent(/go home/i);
   });
 
-  it("should redirect to the home page on click", async () => {
+  it("should change route to '/' on button click", async () => {
     renderFn();
 
     const user = userEvent.setup();
     await user.click(screen.getByRole("button"));
 
-    expect(window.location.pathname).toBe("/");
-    expect(screen.getByText(/home page/i)).toBeInTheDocument();
+    expect(router.push).toHaveBeenCalledWith("/");
   });
 });

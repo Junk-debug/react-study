@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { it, expect, describe, vi } from "vitest";
 import userEvent from "@testing-library/user-event";
-import { ThemeContext, useThemeContext } from "../../context/themeContext";
+import { ThemeContext, useThemeContext } from "@/context/themeContext";
 
 describe("useThemeContext", () => {
   it("should throw error if used outside ThemeProvider", () => {

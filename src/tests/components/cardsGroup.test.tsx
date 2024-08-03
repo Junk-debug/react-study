@@ -1,19 +1,20 @@
 import { render, screen } from "@testing-library/react";
 import { it, describe, expect } from "vitest";
-import { MemoryRouter } from "react-router-dom";
 import { Provider } from "react-redux";
-import CardsGroup from "../../pages/homePage/cardsGroup";
+import CardsGroup from "@/components/cardsGroup";
+import store from "@/redux/store";
+import { RouterContext } from "next/dist/shared/lib/router-context.shared-runtime";
 import mockCharacters from "../mocks/mockCharacters";
-import store from "../../app/store";
+import createMockRouter, { RouterProvider } from "../mocks/createMockRouter";
 
 describe("CardsGroup", () => {
   it("should render the specified number of cards", () => {
     render(
-      <Provider store={store}>
-        <MemoryRouter initialEntries={["/"]}>
+      <RouterProvider router={createMockRouter({})}>
+        <Provider store={store}>
           <CardsGroup characters={mockCharacters} />
-        </MemoryRouter>
-      </Provider>,
+        </Provider>
+      </RouterProvider>,
     );
 
     const cardElements = screen.getAllByTestId("character-card");
@@ -22,9 +23,9 @@ describe("CardsGroup", () => {
 
   it("should render the specified text if array is empty", () => {
     render(
-      <MemoryRouter initialEntries={["/"]}>
+      <RouterContext.Provider value={createMockRouter({})}>
         <CardsGroup characters={[]} />
-      </MemoryRouter>,
+      </RouterContext.Provider>,
     );
 
     expect(screen.getByText(/nothing/i)).toBeInTheDocument();

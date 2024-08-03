@@ -1,19 +1,23 @@
 import react from "@vitejs/plugin-react";
+import path from "path";
 import { configDefaults, defineConfig } from "vitest/config";
 
 export default defineConfig({
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
+    },
+  },
   plugins: [react()],
   test: {
     globals: true,
     coverage: {
       provider: "v8",
       reporter: ["text", "json", "html"],
+      include: ["src/**/*.{ts,tsx}"],
       exclude: [
-        "*config*",
-        ".eslintrc.cjs",
-        "src/main.tsx",
-        "**/*.d.ts",
-        "src/tests/setup.ts",
+        "src/pages/_app.tsx",
+        "src/pages/_document.tsx",
         ...configDefaults.exclude,
       ],
     },

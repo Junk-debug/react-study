@@ -1,60 +1,31 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { MemoryRouter, Outlet, Route, Routes } from "react-router-dom";
 import { Provider } from "react-redux";
 
-import {
-  describe,
-  it,
-  expect,
-  vi,
-  afterAll,
-  afterEach,
-  beforeAll,
-} from "vitest";
+import { describe, it, expect, afterEach } from "vitest";
 
-import DetailedCharacter from "../../pages/detailedCharacter/detailedCharacter";
+import CardsGroup from "@/components/cardsGroup";
+import store from "@/redux/store";
+import { unselectAllCharacters } from "@/redux/slices/selectedCharactersSlice";
 import mockCharacters from "../mocks/mockCharacters";
-import CardsGroup from "../../pages/homePage/cardsGroup";
-import store from "../../app/store";
-import server from "../mocks/server";
-import apiSlice from "../../api/api";
-import { mockGetCharacterById } from "../mocks/handlers";
-import { unselectAllCharacters } from "../../redux/slices/selectedCharactersSlice";
+
+import createMockRouter, { RouterProvider } from "../mocks/createMockRouter";
 
 describe("CharacterCard", () => {
-  const renderFn = () => {
-    return render(
+  const mockRouter = createMockRouter({});
+
+  const renderFn = () =>
+    render(
       <Provider store={store}>
-        <MemoryRouter initialEntries={["/"]}>
-          <Routes>
-            <Route
-              path="/"
-              element={
-                <>
-                  <CardsGroup characters={[mockCharacters[0]]} />
-                  <Outlet />
-                </>
-              }
-            >
-              <Route path="character/:id" element={<DetailedCharacter />} />
-            </Route>
-          </Routes>
-        </MemoryRouter>
+        <RouterProvider router={mockRouter}>
+          <CardsGroup characters={[mockCharacters[0]]} />
+        </RouterProvider>
       </Provider>,
     );
-  };
-
-  beforeAll(() => server.listen());
 
   afterEach(() => {
-    server.resetHandlers();
-    vi.clearAllMocks();
-    store.dispatch(apiSlice.util.resetApiState());
     store.dispatch(unselectAllCharacters());
   });
-
-  afterAll(() => server.close());
 
   it("should render relevant card data", () => {
     renderFn();
@@ -64,9 +35,6 @@ describe("CharacterCard", () => {
 
     const status = screen.getByText(mockCharacters[0].status);
     expect(status).toHaveTextContent(mockCharacters[0].status);
-
-    const image = screen.getByRole("img");
-    expect(image).toHaveAttribute("src", mockCharacters[0].image);
   });
 
   it("should open card details on click", async () => {
@@ -78,23 +46,24 @@ describe("CharacterCard", () => {
     const user = userEvent.setup();
     await user.click(cardElement);
 
-    expect(await screen.findByTestId("detailed-character")).toBeInTheDocument();
+    expect(mockRouter.push).toHaveBeenCalledWith(
+      { query: { detailedId: mockCharacters[0].id } },
+      undefined,
+      {
+        scroll: false,
+      },
+    );
   });
 
-  it("should trigger additional api on card details open", async () => {
+  it("should add selected character on select button click", async () => {
     renderFn();
 
-    const user = userEvent.setup();
-    await user.click(screen.getByTestId("character-card"));
+    const button = screen.getByRole("button");
 
-    expect(mockGetCharacterById).toHaveBeenCalledTimes(1);
-  });
-
-  it("should add selected character on checkbox click", async () => {
-    renderFn();
+    expect(button).toHaveTextContent(/select/i);
 
     const user = userEvent.setup();
-    await user.click(screen.getByRole("checkbox"));
+    await user.click(button);
 
     expect(store.getState().selectedCharacters.selectedCharacters.ids).toEqual([
       mockCharacters[0].id,
@@ -104,16 +73,16 @@ describe("CharacterCard", () => {
   it("should remove selected character if it is already selected on checkbox click", async () => {
     renderFn();
 
-    const checkbox = screen.getByRole("checkbox");
+    const button = screen.getByRole("button", { name: /select/i });
 
     const user = userEvent.setup();
-    await user.click(checkbox);
+    await user.click(button);
 
     expect(store.getState().selectedCharacters.selectedCharacters.ids).toEqual([
       mockCharacters[0].id,
     ]);
 
-    await user.click(checkbox);
+    await user.click(button);
 
     expect(store.getState().selectedCharacters.selectedCharacters.ids).toEqual(
       [],
