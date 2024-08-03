@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { ApiError, Character } from "@/api/types";
 import Button from "./ui/button";
 import ImgWithLoading from "./imgWithLoading";
+import WithLoading from "./withLoading";
 
 const Layout = ({ children }: { children: React.ReactNode }) => (
   <div
@@ -18,7 +19,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => (
         "dark:bg-zinc-950 dark:border-zinc-800",
       )}
     >
-      {children}
+      <WithLoading>{children}</WithLoading>
     </div>
   </div>
 );

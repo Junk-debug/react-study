@@ -120,7 +120,7 @@ const HomePage: NextPage<Props> = ({
           </div>
         )}
 
-        <CardsGroup characters={characters} />
+        {!error && <CardsGroup characters={characters} />}
 
         <PaginationBar
           pagesCount={info?.pages || 0}

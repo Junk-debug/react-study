@@ -1,6 +1,9 @@
 import { useRouter } from "next/router";
 import { Character } from "@/api/types";
 import CharacterCard from "./characterCard";
+import useRouteLoading from "@/hooks/useRouteLoading";
+import Loader from "./ui/loader";
+import { memo } from "react";
 
 interface Props {
   characters: Character[];
@@ -8,9 +11,16 @@ interface Props {
 
 const CardsGroup: React.FC<Props> = ({ characters }) => {
   const router = useRouter();
+  const routeLoading = useRouteLoading();
 
-  if (characters.length === 0) {
-    return <p className="text-center">Nothing found</p>;
+  const loading = !router.query.detailedId && routeLoading;
+
+  if (loading) {
+    return (
+      <div className="h-max w-full flex justify-center items-center">
+        <Loader />
+      </div>
+    );
   }
 
   const openDetailedCard = (detailedId: number) => {
@@ -33,4 +43,4 @@ const CardsGroup: React.FC<Props> = ({ characters }) => {
   );
 };
 
-export default CardsGroup;
+export default memo(CardsGroup);
