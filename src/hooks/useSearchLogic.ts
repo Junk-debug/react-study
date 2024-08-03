@@ -6,13 +6,6 @@ const useSearchLogic = (searchValue: string) => {
 
   const [inputValue, setInputValue] = useState(searchValue);
 
-  const openDetailedCard = (detailedId: number) => {
-    const { query } = router;
-    router.push({ query: { ...query, detailedId } }, undefined, {
-      scroll: false,
-    });
-  };
-
   const handleErrorReset = () => {
     setInputValue("");
     router.push({ query: {} });
@@ -36,7 +29,6 @@ const useSearchLogic = (searchValue: string) => {
     handleSearchInputValueChange,
     handleSearchButtonClick,
     handlePageButtonClick,
-    openDetailedCard,
     handleErrorReset,
   };
 };

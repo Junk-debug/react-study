@@ -7,6 +7,4 @@ export async function getServerSideProps() {
   };
 }
 
-export default function HomePage() {
-  return null;
-}
+export default () => null;

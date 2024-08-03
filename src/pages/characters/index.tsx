@@ -1,15 +1,18 @@
+import { GetServerSideProps, NextPage } from "next";
+
 import Button from "@/components/ui/button";
 import ThemeToggler from "@/components/themeToggler";
-import useTestError from "@/hooks/useTestError";
-import { GetServerSideProps, NextPage } from "next";
-import { fetchCharacterDataWithEpisode, fetchCharacters } from "@/api/api";
-import { ApiError, Character, CharactersResponse } from "@/api/types";
-import CharacterCard from "@/components/characterCard";
 import SearchBar from "@/components/searchBar";
+import CardsGroup from "@/components/cardsGroup";
 import PaginationBar from "@/components/paginationBar";
 import DetailedCharacter from "@/components/detailedCharacter";
-import useSearchLogic from "@/hooks/useSearchLogic";
 import Flyout from "@/components/flyout";
+
+import useSearchLogic from "@/hooks/useSearchLogic";
+import useTestError from "@/hooks/useTestError";
+
+import { fetchCharacterDataWithEpisode, fetchCharacters } from "@/api/api";
+import { ApiError, Character, CharactersResponse } from "@/api/types";
 
 interface Props {
   page: number;
@@ -85,7 +88,6 @@ const HomePage: NextPage<Props> = ({
     handleSearchInputValueChange,
     handleSearchButtonClick,
     handlePageButtonClick,
-    openDetailedCard,
     handleErrorReset,
   } = useSearchLogic(search);
 
@@ -118,15 +120,7 @@ const HomePage: NextPage<Props> = ({
           </div>
         )}
 
-        <div className="grid grid-cols-[repeat(auto-fit,_320px)] justify-center gap-4">
-          {characters.map((character) => (
-            <CharacterCard
-              onClick={() => openDetailedCard(character.id)}
-              character={character}
-              key={character.id}
-            />
-          ))}
-        </div>
+        <CardsGroup characters={characters} />
 
         <PaginationBar
           pagesCount={info?.pages || 0}
