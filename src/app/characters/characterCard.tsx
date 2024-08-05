@@ -10,7 +10,7 @@ import {
   unselectCharacter,
 } from "@/redux/slices/selectedCharactersSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/redux";
-import Button from "./ui/button";
+import Button from "@/components/ui/button";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   character: Character;

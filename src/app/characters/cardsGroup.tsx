@@ -1,4 +1,6 @@
-import { useRouter } from "next/router";
+"use client";
+
+import { useRouter, useSearchParams } from "next/navigation";
 import { Character } from "@/api/types";
 import { memo } from "react";
 import CharacterCard from "./characterCard";
@@ -9,14 +11,14 @@ interface Props {
 
 const CardsGroup: React.FC<Props> = ({ characters }) => {
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   if (!characters.length) {
     return <p className="hidden">Nothing found</p>;
   }
 
   const openDetailedCard = (detailedId: number) => {
-    const { query } = router;
-    router.push({ query: { ...query, detailedId } }, undefined, {
+    router.push(`/characters/${detailedId}?${searchParams.toString()}`, {
       scroll: false,
     });
   };

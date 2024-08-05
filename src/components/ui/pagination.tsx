@@ -8,7 +8,7 @@ interface Props {
   currentPage: number;
 }
 
-const PaginationBar: React.FC<Props> = ({
+const Pagination: React.FC<Props> = ({
   currentPage,
   pagesCount,
   onPageButtonClick,
@@ -59,4 +59,4 @@ const PaginationBar: React.FC<Props> = ({
   );
 };
 
-export default PaginationBar;
+export default Pagination;
