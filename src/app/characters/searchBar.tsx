@@ -3,7 +3,7 @@
 import Button from "@/components/ui/button";
 import Input from "@/components/ui/input";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface Props {
   disabled?: boolean;
@@ -16,6 +16,10 @@ const SearchBar: React.FC<Props> = ({ disabled }) => {
   const [inputValue, setInputValue] = useState(
     searchParams.get("search") || "",
   );
+
+  useEffect(() => {
+    setInputValue(searchParams.get("search") || "");
+  }, [searchParams]);
 
   const handleClick = () => {
     const newPath = `/characters?search=${inputValue}`;
