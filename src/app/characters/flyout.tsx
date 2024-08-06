@@ -42,14 +42,10 @@ const Flyout: React.FC = () => {
     >
       <span>Selected items: {selectedItemsAmount}</span>
       <Button onClick={handleUnselectAll}>Unselect all</Button>
-      <Button>
-        <a
-          href={downloadLink}
-          download={`${selectedItemsAmount}_characters.csv`}
-        >
-          Download
-        </a>
-      </Button>
+
+      <a href={downloadLink} download={`${selectedItemsAmount}_characters.csv`}>
+        <Button className="w-full">Download</Button>
+      </a>
     </div>
   );
 };
