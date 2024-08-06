@@ -13,7 +13,10 @@ export const fetchCharacters = async (params: CharactersParams) => {
   const res = await fetch(
     `${baseUrl}/character/?page=${page || ""}&name=${name || ""}&status=${status || ""}&species=${species || ""}&type=${type || ""}&gender=${gender || ""}`,
     {
-      next: { revalidate: 3600 },
+      headers: {
+        "Cache-Control":
+          "public, s-maxage=3600, maxage=259200, stale-while-revalidate=59",
+      },
     },
   );
   return res.json() as Promise<CharactersResponse | ApiError>;
@@ -22,7 +25,8 @@ export const fetchCharacters = async (params: CharactersParams) => {
 export const fetchCharacterById = async (id: string) => {
   const res = await fetch(`${baseUrl}/character/${id}`, {
     headers: {
-      "Cache-Control": "public, s-maxage=10, stale-while-revalidate=59",
+      "Cache-Control":
+        "public, s-maxage=3600, maxage=259200, stale-while-revalidate=59",
     },
   });
   return res.json() as Promise<Character | ApiError>;
@@ -31,7 +35,8 @@ export const fetchCharacterById = async (id: string) => {
 export const fetchEpisodeById = async (id: string) => {
   const res = await fetch(`${baseUrl}/episode/${id}`, {
     headers: {
-      "Cache-Control": "public, s-maxage=10, stale-while-revalidate=59",
+      "Cache-Control":
+        "public, s-maxage=3600, maxage=259200, stale-while-revalidate=59",
     },
   });
   return res.json() as Promise<Episode>;
