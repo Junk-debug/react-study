@@ -5,7 +5,7 @@ export default function getFormattedPagesArray(
 ) {
   const totalPages = pages.length;
 
-  const result: (number | string)[] = [];
+  const result: (number | typeof ellipsisStart | typeof ellipsisEnd)[] = [];
 
   const ellipsisStart = "ellipsisStart";
   const ellipsisEnd = "ellipsisEnd";
