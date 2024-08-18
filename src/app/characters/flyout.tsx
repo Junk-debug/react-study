@@ -1,3 +1,5 @@
+"use client";
+
 import clsx from "clsx";
 import { useAppDispatch, useAppSelector } from "@/redux/redux";
 import {
@@ -43,9 +45,14 @@ const Flyout: React.FC = () => {
       <span>Selected items: {selectedItemsAmount}</span>
       <Button onClick={handleUnselectAll}>Unselect all</Button>
 
-      <a href={downloadLink} download={`${selectedItemsAmount}_characters.csv`}>
-        <Button className="w-full">Download</Button>
-      </a>
+      <Button asChild className="w-full">
+        <a
+          href={downloadLink}
+          download={`${selectedItemsAmount}_characters.csv`}
+        >
+          Download
+        </a>
+      </Button>
     </div>
   );
 };
