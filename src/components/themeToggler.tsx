@@ -1,4 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
+
+"use client";
+
 import clsx from "clsx";
 import { useThemeContext } from "../context/themeContext";
 import Switch from "./ui/switch";
