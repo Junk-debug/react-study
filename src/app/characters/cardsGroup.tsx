@@ -25,7 +25,7 @@ const CardsGroup: React.FC<Props> = ({ characters }) => {
           key={character.id}
           scroll={false}
         >
-          <CharacterCard character={character} />
+          <CharacterCard className="h-full" character={character} />
         </Link>
       ))}
     </div>

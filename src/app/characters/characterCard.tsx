@@ -25,6 +25,7 @@ const CharacterCard: React.FC<Props> = ({ character, className, ...props }) => {
 
   const handleSelectButtonClick = (e: React.SyntheticEvent) => {
     e.stopPropagation();
+    e.preventDefault();
 
     if (!isSelected) {
       dispatch(selectCharacter(character));

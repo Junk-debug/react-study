@@ -11,12 +11,10 @@ export default async function CharactersPage({
   searchParams: { page: string; search: string };
 }) {
   const { page, search } = searchParams;
-
   const response = await fetchCharacters({ page: Number(page), name: search });
 
   const { info, results: characters = [] } =
     ("error" in response ? undefined : response) || {};
-
   const error = "error" in response ? response.error : null;
 
   return (
