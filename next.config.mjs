@@ -11,15 +11,6 @@ const nextConfig = {
       },
     ],
   },
-  redirects: async () => {
-    return [
-      {
-        source: "/",
-        destination: "/characters",
-        permanent: true,
-      },
-    ];
-  },
 };
 
 export default nextConfig;

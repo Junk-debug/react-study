@@ -33,7 +33,12 @@ const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
 
   return (
     <ThemeContext.Provider value={contextValue}>
-      {children}
+      <main
+        data-theme={theme}
+        className="transition-colors min-h-screen bg-white text-zinc-800 dark:bg-zinc-950 dark:text-zinc-50"
+      >
+        {children}
+      </main>
     </ThemeContext.Provider>
   );
 };
